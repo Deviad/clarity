@@ -1,0 +1,30 @@
+#more compact log format
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%7.7t]){faint} %clr(%-20.20logger{39}){cyan}%clr(:){faint} %m%n"
+
+#enables /actuator/refresh
+management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+
+#skips annoying log message
+spring:
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
+#colorful console messages (if your console supports ANSI colors)
+  output:
+    ansi.enabled: ALWAYS
+
+#
+#spring.sleuth.sampler.percentage=1.0
+#spring.sleuth.web.skipPattern=(^cleanup.*)
+#
+#
+#spring.zipkin.base-url=http://localhost:9411/
+#spring.sleuth.sampler.percentage=1.0
+#
+#spring.zipkin.sender.type=web
