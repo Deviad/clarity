@@ -6,12 +6,12 @@
         <groupId>com.clarity</groupId>
         <artifactId>clarity</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>  <!-- lookup parent from repository -->
+        <relativePath>../</relativePath> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>clarity-eureka-server</artifactId>
+    <artifactId>clarity-config-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>clarity-eureka-server</name>
-    <description>Clarity Eureka Server</description>
+    <name>clarity-config-server</name>
+    <description>Clarity config server</description>
 
     <properties>
         <java.version>11</java.version>
@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
     </dependencies>
 

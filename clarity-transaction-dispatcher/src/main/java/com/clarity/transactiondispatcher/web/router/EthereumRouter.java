@@ -1,8 +1,9 @@
-package com.clarity.transactiondispatcher.router;
+package com.clarity.transactiondispatcher.web.router;
 
-import com.clarity.transactiondispatcher.handler.EthereumHandler;
+import com.clarity.transactiondispatcher.web.handler.EthereumHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;

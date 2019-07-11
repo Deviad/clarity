@@ -1,4 +1,4 @@
-package com.clarity.transactiondispatcher.handler;
+package com.clarity.claritypersistence.handler;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
