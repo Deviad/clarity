@@ -3,4 +3,4 @@ spring:
     name: clarity-persistence
   cloud:
     config:
-      config
+      uri: http://localhost:8888

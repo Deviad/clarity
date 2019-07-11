@@ -10,6 +10,8 @@
     </parent>
     <properties>
         <spring-integration-kafka.version>3.1.4.RELEASE</spring-integration-kafka.version>
+        <web3j.version>4.2.0</web3j.version>
+
     </properties>
     <artifactId>clarity-transaction-dispatcher</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -91,8 +93,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>${web3j.version}</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
