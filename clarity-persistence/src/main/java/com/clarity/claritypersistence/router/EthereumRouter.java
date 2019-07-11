@@ -1,6 +1,6 @@
-package com.clarity.transactiondispatcher.router;
+package com.clarity.claritypersistence.router;
 
-import com.clarity.transactiondispatcher.handler.EthereumHandler;
+import com.clarity.claritypersistence.handler.EthereumHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;

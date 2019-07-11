@@ -1,7 +1,5 @@
 server:
-  port: 8887
-
-
+  port: 8888
 
 
 #more compact log format
@@ -11,17 +9,17 @@ logging:
 
 #enables /actuator/refresh
 management:
-    endpoints:
-      web:
-        exposure:
-          include: "*"
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 #skips annoying log message
 spring:
   devtools:
     restart:
       log-condition-evaluation-delta: false
-#colorful console messages (if your console supports ANSI colors)
+  #colorful console messages (if your console supports ANSI colors)
   output:
     ansi.enabled: ALWAYS
 

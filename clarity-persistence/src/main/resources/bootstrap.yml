@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: clarity-persistence
+  cloud:
+    config:
+      config

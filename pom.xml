@@ -7,6 +7,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>clarity-transaction-dispatcher</module>
+        <module>clarity-eureka-server</module>
+        <module>clarity-persistence</module>
     </modules>
 
     <parent>
@@ -54,7 +56,16 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jersey</artifactId>
+            <version>1.2.0.RELEASE</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
