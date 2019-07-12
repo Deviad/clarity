@@ -1,22 +1,35 @@
 package com.clarity.claritypersistence.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import an.awesome.pipelinr.Pipeline;
+import com.clarity.claritypersistence.Serialize;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import java.io.DataInput;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Component
-public class EthereumHandler {
+public class EthereumController {
+
+
+    private final Pipeline queryPipeline;
+
+    private final Pipeline commandPipeline;
+
+    public EthereumController(@Qualifier("queryPipelinr") Pipeline queryPipeline, @Qualifier("commandPipelinr") Pipeline commandPipeline) {
+        this.queryPipeline = queryPipeline;
+        this.commandPipeline = commandPipeline;
+    }
+
 
     public Mono<ServerResponse> createTransaction(ServerRequest request) {
         return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just("data"), String.class));
@@ -26,18 +39,14 @@ public class EthereumHandler {
         return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just("data"), String.class));
     }
 
-    @SneakyThrows
     public Mono<ServerResponse> readAll(ServerRequest request) {
 
         Map<String, Object> test = new LinkedHashMap<>();
 
         test.put("contents", Arrays.asList("1", "2"));
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        String json = objectMapper.writeValueAsString(test);
-
-        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(json), String.class));
+        CompletableFuture<String> json = queryPipeline.send(new Serialize(test));
+        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(json.getNow("")), String.class));
     }
 
 }
