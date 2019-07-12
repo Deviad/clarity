@@ -1,4 +1,4 @@
-package com.clarity.claritypersistence.handler;
+package com.clarity.claritypersistence.controller;
 
 import an.awesome.pipelinr.Pipeline;
 import com.clarity.claritypersistence.Serialize;

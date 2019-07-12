@@ -1,6 +1,6 @@
 package com.clarity.transactiondispatcher.web.router;
 
-import com.clarity.transactiondispatcher.web.handler.EthereumHandler;
+import com.clarity.transactiondispatcher.web.controller.EthereumController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -14,9 +14,9 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class EthereumRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> route(EthereumHandler ethereumHandler) {
-        return RouterFunctions.route(GET("/ethtransaction/{id}").and(accept(APPLICATION_JSON)), ethereumHandler::readTransaction)
-                .andRoute(POST("/ethtransaction").and(accept(APPLICATION_JSON)).and(contentType(APPLICATION_JSON)), ethereumHandler::createTransaction)
-                .andRoute(GET("/ethtransaction").and(accept(APPLICATION_JSON)), ethereumHandler::readAll);
+    public RouterFunction<ServerResponse> route(EthereumController ethereumController) {
+        return RouterFunctions.route(GET("/ethtransaction/{id}").and(accept(APPLICATION_JSON)), ethereumController::readTransaction)
+                .andRoute(POST("/ethtransaction").and(accept(APPLICATION_JSON)).and(contentType(APPLICATION_JSON)), ethereumController::createTransaction)
+                .andRoute(GET("/ethtransaction").and(accept(APPLICATION_JSON)), ethereumController::readAll);
     }
 }

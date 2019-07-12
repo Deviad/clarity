@@ -99,11 +99,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>an.awesome</groupId>
-			<artifactId>pipelinr</artifactId>
-			<version>0.2</version>
-		</dependency>
+
 <!--		<dependency>-->
 <!--			<groupId>org.postgresql</groupId>-->
 <!--			<artifactId>postgresql</artifactId>-->

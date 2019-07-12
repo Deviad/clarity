@@ -1,6 +1,6 @@
 package com.clarity.claritypersistence.router;
 
-import com.clarity.claritypersistence.handler.EthereumController;
+import com.clarity.claritypersistence.controller.EthereumController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
