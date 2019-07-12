@@ -4,6 +4,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.util.TimeZone;
 
@@ -11,9 +12,9 @@ import java.util.TimeZone;
 public class ClarityPersistenceApplication implements InitializingBean {
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(ClarityPersistenceApplication.class);
-        app.setWebApplicationType(WebApplicationType.REACTIVE);
-        SpringApplication.run(ClarityPersistenceApplication.class, args);
+        new SpringApplicationBuilder(ClarityPersistenceApplication.class)
+                .web(WebApplicationType.REACTIVE)
+                .run(args);
     }
 
     private void started() {
