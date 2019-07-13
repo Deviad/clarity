@@ -15,9 +15,9 @@
     </properties>
     <artifactId>clarity-transaction-dispatcher</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Clarity transaction dispatcher</name>
+    <name>clarity-transaction-dispatcher</name>
     <description>This microservice dispatches transactions from a cryptocurrency server to Hyperledger</description>
-
+    <packaging>jar</packaging>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -31,6 +31,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.clarity</groupId>
+            <artifactId>clarityshared</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>

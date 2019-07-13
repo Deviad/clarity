@@ -12,6 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>clarity-config-server</name>
     <description>Clarity config server</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>11</java.version>

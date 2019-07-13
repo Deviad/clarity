@@ -10,6 +10,7 @@
         <module>clarity-eureka-server</module>
         <module>clarity-persistence</module>
         <module>clarity-config-server</module>
+        <module>clarity-shared</module>
     </modules>
 
     <parent>

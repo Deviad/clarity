@@ -1,4 +1,4 @@
-package com.clarity.transactiondispatcher;
+package com.clarity.clarityshared;
 
 import an.awesome.pipelinr.Command;
 

@@ -1,7 +1,7 @@
 package com.clarity.transactiondispatcher.web.handler;
 
 
-import com.clarity.transactiondispatcher.Query;
+import com.clarity.clarityshared.Query;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jooq.lambda.Unchecked;
 import org.springframework.stereotype.Component;
