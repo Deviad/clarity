@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-public class EthereumReadAll implements Query<CompletableFuture<String>> {
+public class EthereumAccountCreate implements Query<CompletableFuture<String>> {
     private String json;
 
-    public EthereumReadAll(Object object) {
+    public EthereumAccountCreate(Object object) {
         this.init(object);
     }
 
@@ -25,10 +25,10 @@ public class EthereumReadAll implements Query<CompletableFuture<String>> {
     }
 
     @Component
-    static class Handler implements Query.Handler<EthereumReadAll, CompletableFuture<String>> {
+    static class Handler implements Query.Handler<EthereumAccountCreate, CompletableFuture<String>> {
 
         @Override
-        public CompletableFuture<String> handle(EthereumReadAll command) {
+        public CompletableFuture<String> handle(EthereumAccountCreate command) {
 
             return CompletableFuture.completedFuture(command.toJSON());
         }
