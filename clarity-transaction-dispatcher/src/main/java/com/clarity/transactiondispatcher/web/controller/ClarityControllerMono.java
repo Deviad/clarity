@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
-interface ClarityControllerMono {
+public interface ClarityControllerMono {
 
 
 
