@@ -109,6 +109,11 @@
             <artifactId>core</artifactId>
             <version>${web3j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.aol.cyclops</groupId>
+            <artifactId>cyclops-validation</artifactId>
+            <version>7.2.4</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
