@@ -36,7 +36,6 @@ public class EthereumTransactionController {
         this.commandPipeline = commandPipeline;
     }
 
-
     public Mono<ServerResponse> createTransaction(ServerRequest request) {
         return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just("data"), String.class));
     }
