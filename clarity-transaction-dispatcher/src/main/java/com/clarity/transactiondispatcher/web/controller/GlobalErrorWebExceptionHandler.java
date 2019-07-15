@@ -19,9 +19,6 @@ import java.util.Map;
 @Order(-2)
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
-    //TODO: Intellij signals autowiring issues related to ServerCodecConfigurer:
-    // find out why since compiler does not fail.
-
     public GlobalErrorWebExceptionHandler(GlobalErrorAttributes g, ApplicationContext applicationContext,
                                           ServerCodecConfigurer serverCodecConfigurer) {
         super(g, new ResourceProperties(), applicationContext);

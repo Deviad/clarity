@@ -1,64 +1,56 @@
 package com.clarity.transactiondispatcher.web.controller;
 
-import an.awesome.pipelinr.Pipeline;
-import com.clarity.transactiondispatcher.web.handler.EthereumTransactionReadAll;
+import com.clarity.transactiondispatcher.services.EthereumOperations;
+import com.clarity.transactiondispatcher.services.PipelinrService;
+import com.clarity.transactiondispatcher.web.handler.EthereumTransactionCreate;
+import com.clarity.transactiondispatcher.web.model.TransactionRequestDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.http.HttpService;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
+import javax.validation.Valid;
+import java.util.Map;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
-
-@Component
+@RestController
 @Slf4j
 public class EthereumTransactionController {
 
-    private final Pipeline queryPipeline;
 
-    private final Pipeline commandPipeline;
+    private final PipelinrService pipelinrService;
+    private final EthereumOperations ethereumOperations;
 
-    @Value("${infura.endpoint}")
-    private String infuraEndpoint;
-
-    public EthereumTransactionController(@Qualifier("queryPipelinr") Pipeline queryPipeline, @Qualifier("commandPipelinr") Pipeline commandPipeline) {
-        this.queryPipeline = queryPipeline;
-        this.commandPipeline = commandPipeline;
+    public EthereumTransactionController(PipelinrService pipelinrService, EthereumOperations ethereumOperations) {
+        this.pipelinrService = pipelinrService;
+        this.ethereumOperations = ethereumOperations;
     }
 
-    public Mono<ServerResponse> createTransaction(ServerRequest request) {
-        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just("data"), String.class));
+    @PostMapping("/ethtransaction")
+    public Mono<Map<String, Object>> createTransaction(@RequestBody @Valid TransactionRequestDTO transactionRequestDTO) {
+      return pipelinrService.getQueryPipeline()
+              .send(new EthereumTransactionCreate(transactionRequestDTO, ethereumOperations));
     }
 
-    public Mono<ServerResponse> readTransaction(ServerRequest request) {
-
-        Web3j web3 = Web3j.build(new HttpService(infuraEndpoint));  // defaults to http://localhost:8545/
-
-
-
-
-
-        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(infuraEndpoint), String.class));
-    }
-
-//    public Mono<ServerResponse> readAll(ServerRequest request) {
-//        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromObject(new ArrayList<>(Arrays.asList("1", "2"))));
+//    public Mono<ServerResponse> readTransaction(ServerRequest request) {
+//
+//        Web3j web3 = Web3j.build(new HttpService(infuraEndpoint));  // defaults to http://localhost:8545/
+//
+//
+//
+//
+//
+//        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(infuraEndpoint), String.class));
 //    }
-
-    public Mono<ServerResponse> readAll(ServerRequest request) {
-
-        CompletableFuture<String> json = queryPipeline.send(new EthereumTransactionReadAll(new ArrayList<>(Arrays.asList("1", "2"))));
-        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(json.getNow("")), String.class));
-    }
+//
+//    public Mono<ServerResponse> readAll(ServerRequest request) {
+//
+//        CompletableFuture<String> json = queryPipeline.send(new EthereumTransactionReadAll(new ArrayList<>(Arrays.asList("1", "2"))));
+//        return ok().contentType(APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(json.getNow("")), String.class));
+//    }
 
 }
