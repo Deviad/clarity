@@ -1,13 +1,14 @@
 package com.clarity.transactiondispatcher.web.controller;
 
 
-import an.awesome.pipelinr.Pipeline;
-import com.clarity.transactiondispatcher.services.Web3jService;
+import com.clarity.transactiondispatcher.services.EthereumOperations;
+import com.clarity.transactiondispatcher.services.PipelinrService;
 import com.clarity.transactiondispatcher.web.handler.EthereumAccountCreate;
+import com.clarity.transactiondispatcher.web.handler.EthereumAccountGetBalance;
+import com.clarity.transactiondispatcher.web.model.AccountBalanceRequestDTO;
 import com.clarity.transactiondispatcher.web.model.AccountRequestDTO;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,26 +19,26 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-public class EthereumAccountController implements ResponseFactory {
-
-    private final Pipeline queryPipeline;
-
-    private final Pipeline commandPipeline;
-
-    private final Web3jService web3;
+public class EthereumAccountController {
 
 
-    public EthereumAccountController(
-            @Qualifier("queryPipelinr") Pipeline queryPipeline,
-            @Qualifier("commandPipelinr") Pipeline commandPipeline,
-            Web3jService web3) {
-        this.queryPipeline = queryPipeline;
-        this.commandPipeline = commandPipeline;
-        this.web3 = web3;
+    private final PipelinrService pipelinrService;
+    private final EthereumOperations operations;
+
+    public EthereumAccountController(PipelinrService pipelinrService, EthereumOperations operations) {
+        this.pipelinrService = pipelinrService;
+        this.operations = operations;
     }
+
     @PostMapping("/ethaccount")
     @SneakyThrows
     public Mono<Map<String, Object>> createAccount(@RequestBody @Valid AccountRequestDTO accountRequestDTO) {
-       return queryPipeline.send(new EthereumAccountCreate(accountRequestDTO)).get();
+        return pipelinrService.getQueryPipeline().send(new EthereumAccountCreate(accountRequestDTO, operations));
+    }
+
+    @PostMapping("/ethaccount/balance")
+    @SneakyThrows
+    public Mono<Map<String, Object>> getAccountBalance(@RequestBody @Valid AccountBalanceRequestDTO accountBalanceRequestDTO) {
+        return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
     }
 }
