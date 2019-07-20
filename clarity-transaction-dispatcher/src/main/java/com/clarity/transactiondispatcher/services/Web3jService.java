@@ -11,8 +11,13 @@ import org.web3j.protocol.http.HttpService;
 @Component
 public class Web3jService implements InitializingBean {
 
-    @Value("${infura.endpoint}")
-    private String infuraEndpoint;
+    @Value("${infura.https-endpoint}")
+    @Getter
+    private String infuraHttpsEndpoint;
+
+    @Value("${infura.ws-endpoint}")
+    @Getter
+    private String infuraWsEndpoint;
 
     @Getter
     @Setter
@@ -20,6 +25,6 @@ public class Web3jService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        web3 = Web3j.build(new HttpService(infuraEndpoint));
+        web3 = Web3j.build(new HttpService(infuraHttpsEndpoint));
     }
 }

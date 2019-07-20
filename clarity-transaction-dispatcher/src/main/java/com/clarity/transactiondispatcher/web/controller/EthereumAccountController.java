@@ -41,4 +41,10 @@ public class EthereumAccountController {
     public Mono<Map<String, Object>> getAccountBalance(@RequestBody @Valid AccountBalanceRequestDTO accountBalanceRequestDTO) {
         return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
     }
+
+    @PostMapping("/ethaccount/updatedbalance")
+    @SneakyThrows
+    public Mono<Map<String, Object>> getUpdatedAccountBalance(@RequestBody @Valid AccountBalanceRequestDTO accountBalanceRequestDTO) {
+        return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
+    }
 }
