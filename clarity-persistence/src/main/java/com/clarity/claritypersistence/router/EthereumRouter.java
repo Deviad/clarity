@@ -15,8 +15,8 @@ public class EthereumRouter {
 
     @Bean
     public RouterFunction<ServerResponse> route(EthereumController ethereumController) {
-        return RouterFunctions.route(GET("/persistance/{id}").and(accept(APPLICATION_JSON)), ethereumController::readTransaction)
-                .andRoute(POST("/persistance").and(accept(APPLICATION_JSON)).and(contentType(APPLICATION_JSON)), ethereumController::createTransaction)
-                .andRoute(GET("/persistance").and(accept(APPLICATION_JSON)), ethereumController::readAll);
+        return RouterFunctions.route(GET("/persistence/{id}").and(accept(APPLICATION_JSON)), ethereumController::readTransaction)
+                .andRoute(POST("/persistence").and(accept(APPLICATION_JSON)).and(contentType(APPLICATION_JSON)), ethereumController::createTransaction)
+                .andRoute(GET("/persistence").and(accept(APPLICATION_JSON)), ethereumController::readAll);
     }
 }
