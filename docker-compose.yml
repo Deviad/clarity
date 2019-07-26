@@ -26,17 +26,18 @@ services:
     depends_on:
       - zookeeper
 
-#  client-go: #geth - TODO: be determined if we need a local client
-#    image: ethereum/client-go
-#    volumes:
-#      - ethereum:/root
-#    ports:
-#      - "8545:8545"
-#      - "30303:30303"
-#    command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' "
-#    restart: always
-#    networks:
-#      - clarity
+  client-go:
+    image: ethereum/client-go
+    volumes:
+      - ethereum:/root
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "30303:30303"
+    command: "--rpc --rpcaddr '0.0.0.0' --rpcport '8545' --ws --wsaddr '0.0.0.0' --wsport '8546'"
+    restart: always
+    networks:
+      - clarity
 
   # node: -
   #   image: "node:9"
