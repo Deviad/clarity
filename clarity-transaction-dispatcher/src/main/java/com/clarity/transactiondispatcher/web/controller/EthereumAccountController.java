@@ -66,16 +66,16 @@ public class EthereumAccountController {
                                 () -> Base64.decode(accountBalanceRequestDTO.getWallet())).get()), WalletFile.class)));
 
 
-        web3jSocketConnection
-                .transactionFlowable()
-//                .map(transaction -> transaction.getTo())
-                .doOnSubscribe(
-                    subscription -> log.info("Subscribe to newly transactions confirmed on the blockchain."))
-                .filter(transaction-> transaction.getTo().equals(supplierCompletableFuture.get().get().getAddress()))
-                .subscribe(
-                        transaction-> log.info("Transaction from, to, gasPrice {}, {}, {}", transaction.getFrom(), transaction.getTo(), transaction.getGasPrice()),
-                        throwable -> log.error("Could not subscribe to block notifications: {}", throwable.getMessage())
-                );
+//        web3jSocketConnection
+//                .transactionFlowable()
+////                .map(transaction -> transaction.getTo())
+//                .doOnSubscribe(
+//                    subscription -> log.info("Subscribe to newly transactions confirmed on the blockchain."))
+//                .filter(transaction-> transaction.getTo().equals(supplierCompletableFuture.get().get().getAddress()))
+//                .subscribe(
+//                        transaction-> log.info("Transaction from, to, gasPrice {}, {}, {}", transaction.getFrom(), transaction.getTo(), transaction.getGasPrice()),
+//                        throwable -> log.error("Could not subscribe to block notifications: {}", throwable.getMessage())
+//                );
         return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
     }
 }

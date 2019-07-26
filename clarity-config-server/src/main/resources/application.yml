@@ -5,6 +5,6 @@ spring:
     config:
       server:
         git:
-          uri: ${HOME}/projects/clarity-config-private
+          uri: ${HOME}/projects/clarity-config
           skipSslValidation: true
 
