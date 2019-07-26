@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +42,8 @@ public class InfuraSocketConfiguration {
 
         String json = objectMapper.writeValueAsString(map);
 
-        Flux<String> input = Flux.generate(sink -> sink.next(json));
+        Flux<String> input = Flux.<String>generate(sink -> sink.next(json))
+                .delayElements(Duration.ofSeconds(1));
 
         ReactorNettyWebSocketClient client = new ReactorNettyWebSocketClient();
         EmitterProcessor<String> output = EmitterProcessor.create();
@@ -49,9 +51,7 @@ public class InfuraSocketConfiguration {
         Mono<Void> sessionMono = client.execute(URI.create(web3jService.getInfuraWsEndpoint()), session -> session.send(input.map(session::textMessage))
                 .thenMany(session.receive().map(WebSocketMessage::getPayloadAsText).subscribeWith(output).then()).then());
 
-        return output.doOnSubscribe(s -> {
-            sessionMono.subscribe();
-        }).doOnError(x -> log.info(x.getMessage()));
+        return output.doOnSubscribe(s -> sessionMono.subscribe()).doOnError(x -> log.info(x.getMessage()));
     }
 
     @Bean
