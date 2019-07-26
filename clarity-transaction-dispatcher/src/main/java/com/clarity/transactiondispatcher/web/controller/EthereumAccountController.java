@@ -38,8 +38,6 @@ public class EthereumAccountController {
 
     private final PipelinrService pipelinrService;
     private final EthereumOperations operations;
-    @Qualifier("web3jSocketConnection") private final Web3j web3jSocketConnection;
-    private final Web3jService web3jService;
 
 
     @PostMapping("/ethaccount")
