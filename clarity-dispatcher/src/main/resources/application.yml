@@ -1,0 +1,35 @@
+
+security:
+  enabled: true
+  endpoints:
+    login:
+      enabled: true
+    oauth:
+      enabled: true
+  token:
+    jwt:
+      enabled: true
+      signatures:
+        secret:
+          generator:
+            secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
+tracing:
+  zipkin:
+    enabled: true
+    http:
+      url: http://localhost:9411
+    sampler:
+      probability: 0.1
+jackson:
+  bean-introspection-module: true
+eureka:
+  client:
+    registration:
+      enabled: true
+#    defaultZone: "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}"
+
+#kafka:
+#  bootstrap:
+#    servers: localhost:9092
+
+
