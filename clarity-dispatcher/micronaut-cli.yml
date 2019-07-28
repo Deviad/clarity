@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: clarity.dispatcher
----
-testFramework: junit
-sourceLanguage: java
