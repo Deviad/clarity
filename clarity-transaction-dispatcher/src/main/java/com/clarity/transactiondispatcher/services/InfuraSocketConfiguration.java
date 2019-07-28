@@ -1,17 +1,28 @@
 package com.clarity.transactiondispatcher.services;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.websocket.WebSocketClient;
-import org.web3j.protocol.websocket.WebSocketService;
+import org.springframework.web.reactive.socket.WebSocketMessage;
+import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
+import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.function.Consumer;
+import java.time.Duration;
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Configuration
 @Slf4j
@@ -20,36 +31,52 @@ public class InfuraSocketConfiguration {
     @Autowired
     private Web3jService web3jService;
 
-    @Bean("web3jSocketConnection")
     @SneakyThrows
-    Web3j webSocketSubscription() {
-        final WebSocketClient webSocketClient = new WebSocketClient(new URI(web3jService.getInfuraWsEndpoint()));
-        final boolean includeRawResponses = false;
-        final WebSocketService webSocketService = new WebSocketService(webSocketClient, includeRawResponses);
-        webSocketClient.connect();
-        return Web3j.build(webSocketService);
+    @Bean("webSocketSubscription")
+    Flux<String> wsConnectNetty() {
+        Map<String, Object> map = Stream.of(
+                new AbstractMap.SimpleEntry<>("id", 1),
+                new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
+                new AbstractMap.SimpleEntry<>("params", new Object[]{"newHeads"})
+        ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        return clientFactory.apply(map);
+
     }
 
-    private Consumer<String> logger() {
-        return (String s) -> log.info("Logging web3j subscription: " + s);
+    @Bean
+    public ApplicationRunner applicationRunner(final @Qualifier("webSocketSubscription") Flux<String> ws) {
+        return applicationArguments -> ws.subscribe(log::info);
     }
-//    @SneakyThrows
-//    @Bean("webSocketSubscription")
-//    Mono<Void> wsConnectNetty() {
-//        URI uri = new URI(web3jService.getInfuraWsEndpoint());
-//      return new ReactorNettyWebSocketClient().execute(uri,
-//                session -> session
-//                        .receive()
-//                        .map(WebSocketMessage::getPayloadAsText)
-////                        .take(MAX_EVENTS)
-//                        .doOnNext(txt -> log.info(session.getId() + ".IN: " + txt))
-//                        .flatMap(txt -> session.send(Mono.just(session.textMessage(txt))))
-//                        .doOnSubscribe(subscriber -> log.info(session.getId() + ".OPEN"))
-//                        .doFinally(signalType -> {session.close(); log.info(session.getId() + ".CLOSE"); })
-//                        .then()
-//
-//        );
-//    }
 
+
+    @Bean
+    ReactorNettyWebSocketClient client() {
+        return new ReactorNettyWebSocketClient();
+    }
+
+    @Bean
+    EmitterProcessor<String> emitterProcessor() {
+        return EmitterProcessor.create();
+    }
+
+    public Function<Map<String, Object>, Flux<String>> clientFactory = (map)->{
+
+//        ReactorNettyWebSocketClient client = nettyInstance();
+//        EmitterProcessor<String> output = EmitterProcessor.create();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String json = Unchecked.supplier(()->objectMapper.writeValueAsString(map)).get();
+
+        Flux<String> input = Flux.<String>generate(sink -> sink.next(json))
+                .delayElements(Duration.ofSeconds(1));
+
+        Mono<Void> sessionMono = client().execute(URI.create(web3jService.getInfuraWsEndpoint()), session -> session.send(input.map(session::textMessage))
+                .thenMany(session.receive().map(WebSocketMessage::getPayloadAsText).subscribeWith(emitterProcessor()).then()).then());
+
+        return emitterProcessor().doOnSubscribe(s -> sessionMono.subscribe()).doOnError(x -> log.info(x.getMessage()));
+
+    };
 
 }
