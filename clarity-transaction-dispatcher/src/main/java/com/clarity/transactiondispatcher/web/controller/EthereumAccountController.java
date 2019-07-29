@@ -14,8 +14,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.util.Base64;
 import org.jooq.lambda.Unchecked;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,21 +63,11 @@ public class EthereumAccountController {
                         () -> objectMapper.readValue(new String(Unchecked.supplier(
                                 () -> Base64.decode(accountBalanceRequestDTO.getWallet())).get()), WalletFile.class)));
 
-
-//        web3jSocketConnection
-//                .transactionFlowable()
-////                .map(transaction -> transaction.getTo())
-//                .doOnSubscribe(
-//                    subscription -> log.info("Subscribe to newly transactions confirmed on the blockchain."))
-//                .filter(transaction-> transaction.getTo().equals(supplierCompletableFuture.get().get().getAddress()))
-//                .subscribe(
-//                        transaction-> log.info("Transaction from, to, gasPrice {}, {}, {}", transaction.getFrom(), transaction.getTo(), transaction.getGasPrice()),
-//                        throwable -> log.error("Could not subscribe to block notifications: {}", throwable.getMessage())
-//                );
         return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
     }
 
-    @GetMapping(value = "/ethaccount/test", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+//    @GetMapping(value = "/ethaccount/test", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @MessageMapping("/ethaccount/test")
     public Flux<String> getTest() {
         Map<String, Object> map = Stream.of(
                 new AbstractMap.SimpleEntry<>("id", 1),

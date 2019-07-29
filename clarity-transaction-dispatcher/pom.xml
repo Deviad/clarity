@@ -11,8 +11,19 @@
     <properties>
         <spring-integration-kafka.version>3.1.4.RELEASE</spring-integration-kafka.version>
         <web3j.version>4.2.0</web3j.version>
-
     </properties>
+    <repositories>
+        <repository>
+            <id>spring-snapshot-repo</id>
+            <name>Spring snapshot</name>
+            <url>https://repo.spring.io/snapshot</url>
+        </repository>
+        <repository>
+            <id>spring-milestone-repo</id>
+            <name>Spring milestone repo</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
     <artifactId>clarity-transaction-dispatcher</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>clarity-transaction-dispatcher</name>
@@ -49,6 +60,11 @@
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-rsocket</artifactId>
+            <version>2.2.0.M2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
