@@ -16,12 +16,12 @@ import java.util.Map;
 
 @Component
 @Slf4j
-public class NettyWebSocketClient {
+public class NettyWsRequestFactory {
 
     private final ReactorNettyWebSocketClient client;
     private final EmitterProcessor<String> otuput;
 
-    public NettyWebSocketClient(ReactorNettyWebSocketClient client, EmitterProcessor<String> otuput) {
+    public NettyWsRequestFactory(ReactorNettyWebSocketClient client, EmitterProcessor<String> otuput) {
         this.client = client;
         this.otuput = otuput;
     }

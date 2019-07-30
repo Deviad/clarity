@@ -11,9 +11,9 @@ import java.util.Map;
 public class EthereumClient {
 
  private final Web3jService web3jService;
- private final NettyWebSocketClient client;
+ private final NettyWsRequestFactory client;
 
-    public EthereumClient(NettyWebSocketClient client, Web3jService web3jService) {
+    public EthereumClient(NettyWsRequestFactory client, Web3jService web3jService) {
         this.web3jService = web3jService;
         this.client = client;
     }

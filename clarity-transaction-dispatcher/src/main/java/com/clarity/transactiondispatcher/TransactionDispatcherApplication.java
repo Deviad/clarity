@@ -1,15 +1,17 @@
 package com.clarity.transactiondispatcher;
 
-import java.util.TimeZone;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
-@SpringBootApplication(exclude = WebMvcAutoConfiguration.class)
-// @EnableBinding(KStreamProcessorX.class)
+import java.util.TimeZone;
+
+@SpringBootApplication(exclude = {WebMvcAutoConfiguration.class})
+
+@EnableWebFlux
 public class TransactionDispatcherApplication implements InitializingBean {
 
     private void started() {
