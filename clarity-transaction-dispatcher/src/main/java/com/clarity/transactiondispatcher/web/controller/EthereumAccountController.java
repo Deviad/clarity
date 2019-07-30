@@ -2,7 +2,7 @@ package com.clarity.transactiondispatcher.web.controller;
 
 
 import com.clarity.transactiondispatcher.services.EthereumClient;
-import com.clarity.transactiondispatcher.services.EthereumOperations;
+import com.clarity.transactiondispatcher.services.EthereumService;
 import com.clarity.transactiondispatcher.services.PipelinrService;
 import com.clarity.transactiondispatcher.web.handler.EthereumAccountCreate;
 import com.clarity.transactiondispatcher.web.handler.EthereumAccountGetBalance;
@@ -38,19 +38,19 @@ public class EthereumAccountController {
 
 
     private final PipelinrService pipelinrService;
-    private final EthereumOperations operations;
+    private final EthereumService ethService;
     private final EthereumClient ethereumClient;
 
     @PostMapping("/ethaccount")
     @SneakyThrows
     public Mono<Map<String, Object>> createAccount(@RequestBody @Valid AccountRequestDTO accountRequestDTO) {
-        return pipelinrService.getQueryPipeline().send(new EthereumAccountCreate(accountRequestDTO, operations));
+        return pipelinrService.getQueryPipeline().send(new EthereumAccountCreate(accountRequestDTO, ethService));
     }
 
     @PostMapping("/ethaccount/balance")
     @SneakyThrows
     public Mono<Map<String, Object>> getAccountBalance(@RequestBody @Valid AccountBalanceRequestDTO accountBalanceRequestDTO) {
-        return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
+        return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, ethService));
     }
 
     @PostMapping("/ethaccount/updatedbalance")
@@ -75,7 +75,7 @@ public class EthereumAccountController {
 //                        transaction-> log.info("Transaction from, to, gasPrice {}, {}, {}", transaction.getFrom(), transaction.getTo(), transaction.getGasPrice()),
 //                        throwable -> log.error("Could not subscribe to block notifications: {}", throwable.getMessage())
 //                );
-        return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, operations));
+        return pipelinrService.getQueryPipeline().send(new EthereumAccountGetBalance(accountBalanceRequestDTO, ethService));
     }
 
     @GetMapping(value = "/ethaccount/test", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

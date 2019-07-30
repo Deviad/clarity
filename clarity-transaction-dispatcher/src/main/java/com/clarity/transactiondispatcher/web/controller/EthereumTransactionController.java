@@ -1,38 +1,35 @@
 package com.clarity.transactiondispatcher.web.controller;
 
-import java.util.Map;
-
-import javax.validation.Valid;
-
-import com.clarity.transactiondispatcher.services.EthereumOperations;
+import com.clarity.transactiondispatcher.services.EthereumService;
 import com.clarity.transactiondispatcher.services.PipelinrService;
 import com.clarity.transactiondispatcher.web.handler.EthereumTransactionCreate;
 import com.clarity.transactiondispatcher.web.model.TransactionRequestDTO;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @Slf4j
 public class EthereumTransactionController {
 
     private final PipelinrService pipelinrService;
-    private final EthereumOperations ethereumOperations;
+    private final EthereumService ethereumService;
 
-    public EthereumTransactionController(PipelinrService pipelinrService, EthereumOperations ethereumOperations) {
+    public EthereumTransactionController(PipelinrService pipelinrService, EthereumService ethereumService) {
         this.pipelinrService = pipelinrService;
-        this.ethereumOperations = ethereumOperations;
+        this.ethereumService = ethereumService;
     }
 
     @PostMapping("/ethtransaction")
     public Mono<Map<String, Object>> createTransaction(
             @RequestBody @Valid TransactionRequestDTO transactionRequestDTO) {
         return pipelinrService.getQueryPipeline()
-                .send(new EthereumTransactionCreate(transactionRequestDTO, ethereumOperations));
+                .send(new EthereumTransactionCreate(transactionRequestDTO, ethereumService));
     }
 
 }

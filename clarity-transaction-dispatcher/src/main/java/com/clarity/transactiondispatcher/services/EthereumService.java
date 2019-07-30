@@ -20,11 +20,11 @@ import java.util.Map;
 
 @Component
 @Slf4j
-public class EthereumOperations implements JSONAble {
+public class EthereumService implements JSONAble {
 
     private final Web3jService web3jService;
 
-    public EthereumOperations(Web3jService web3jService) {
+    public EthereumService(Web3jService web3jService) {
         this.web3jService = web3jService;
     }
 

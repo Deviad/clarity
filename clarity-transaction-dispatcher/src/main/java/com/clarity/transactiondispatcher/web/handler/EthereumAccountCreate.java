@@ -2,7 +2,7 @@ package com.clarity.transactiondispatcher.web.handler;
 
 import an.awesome.pipelinr.Command;
 import com.clarity.clarityshared.Query;
-import com.clarity.transactiondispatcher.services.EthereumOperations;
+import com.clarity.transactiondispatcher.services.EthereumService;
 import com.clarity.transactiondispatcher.web.controller.ResponseFactory;
 import com.clarity.transactiondispatcher.web.model.AccountRequestDTO;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class EthereumAccountCreate implements Query<Mono<Map<String, Object>>> {
     @Getter
     private AccountRequestDTO accountRequestDTO;
     @Getter
-    private EthereumOperations operations;
+    private EthereumService ethService;
 
     @Component
     @NoArgsConstructor
@@ -30,7 +30,7 @@ public class EthereumAccountCreate implements Query<Mono<Map<String, Object>>> {
             Mono<Map<String, Object>> result = null;
             try {
                 String password = command.accountRequestDTO.getPassword();
-                final Map<String, String> walletInfo = command.getOperations().createAccount(password);
+                final Map<String, String> walletInfo = command.getEthService().createAccount(password);
                 result = getSuccessResponse(walletInfo);
             } catch (Exception ex) {
                 log.info(ex.getMessage());

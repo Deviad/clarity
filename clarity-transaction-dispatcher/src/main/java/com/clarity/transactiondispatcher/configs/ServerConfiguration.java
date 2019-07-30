@@ -1,10 +1,11 @@
 package com.clarity.transactiondispatcher.configs;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.support.DefaultServerCodecConfigurer;
 
-@org.springframework.context.annotation.Configuration
-public class Configuration {
+@Configuration
+public class ServerConfiguration {
 
     @Bean
     DefaultServerCodecConfigurer defaultServerCodecConfigurer() {

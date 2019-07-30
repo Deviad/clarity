@@ -3,7 +3,7 @@ package com.clarity.transactiondispatcher.web.handler;
 
 import an.awesome.pipelinr.Command;
 import com.clarity.clarityshared.Query;
-import com.clarity.transactiondispatcher.services.EthereumOperations;
+import com.clarity.transactiondispatcher.services.EthereumService;
 import com.clarity.transactiondispatcher.web.controller.ResponseFactory;
 import com.clarity.transactiondispatcher.web.model.TransactionRequestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ public class EthereumTransactionCreate implements Query<Mono<Map<String, Object>
     @Getter
     private TransactionRequestDTO transactionRequestDTO;
     @Getter
-    private EthereumOperations operations;
+    private EthereumService ethService;
 
     @Component
     @NoArgsConstructor
@@ -42,7 +42,7 @@ public class EthereumTransactionCreate implements Query<Mono<Map<String, Object>
                 ObjectMapper objectMapper = new ObjectMapper();
                 WalletFile walletFile = objectMapper.readValue(new String(Base64.decode(walletBase64)), WalletFile.class);
 
-                result = getSuccessResponse(command.operations.sendTransaction(password, walletFile, amount, command.transactionRequestDTO.getToAddress()));
+                result = getSuccessResponse(command.ethService.sendTransaction(password, walletFile, amount, command.transactionRequestDTO.getToAddress()));
             } catch (Exception ex) {
                 log.info(ex.getMessage());
             }
