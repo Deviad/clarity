@@ -7,7 +7,7 @@ import io.micronaut.websocket.annotation.OnMessage;
 import io.micronaut.websocket.annotation.OnOpen;
 import io.reactivex.Flowable;
 
-@ClientWebSocket("http://localhost:8546")
+@ClientWebSocket("/")
 public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
     private WebSocketSession session;
     private HttpRequest request;

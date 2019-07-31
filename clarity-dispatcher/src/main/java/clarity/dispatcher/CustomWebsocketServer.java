@@ -40,7 +40,7 @@ public class CustomWebsocketServer {
 
 
       broadcaster.broadcastSync(
-              client.connect(map), MediaType.TEXT_EVENT_STREAM_TYPE, isValid(topic, session));
+              client.connect(map).flatMap(EthereumLowLevelWebsocketClient::getFlow), MediaType.TEXT_EVENT_STREAM_TYPE, isValid(topic, session));
 
 
   }

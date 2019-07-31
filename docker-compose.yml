@@ -17,7 +17,7 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
     volumes:
-      - kafka:/bitnami/kafka
+      - kafka:/bitnami/kafka:cached
     ports:
       - "9092:9092"
     networks:
@@ -29,7 +29,7 @@ services:
   client-go:
     image: ethereum/client-go
     volumes:
-      - ethereum:/root
+      - ethereum:/root:cached
     ports:
       - "8545:8545"
       - "8546:8546"

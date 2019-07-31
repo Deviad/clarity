@@ -19,19 +19,13 @@ public class EthereumWebsocketClient  {
     private RxWebSocketClient client;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public EthereumWebsocketClient(@Client("/") RxWebSocketClient client) {
+    public EthereumWebsocketClient(@Client("ws://localhost:8546") RxWebSocketClient client) {
         this.client = client;
     }
 
     public Flowable<EthereumLowLevelWebsocketClient> connect(Map<String, Object> reqParams) {
-        Map<String, Object> map = Stream.of(
-        new AbstractMap.SimpleEntry<>("id", 1),
-        new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
-        new AbstractMap.SimpleEntry<>("params", new Object[]{"newHeads"}))
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-//        String json = Unchecked.supplier(()->objectMapper.writeValueAsString(map)).get();
 
-        return client.connect(EthereumLowLevelWebsocketClient.class, map);
+        return client.connect(EthereumLowLevelWebsocketClient.class, reqParams);
 
     }
 
