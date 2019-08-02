@@ -5,47 +5,48 @@ import io.micronaut.websocket.WebSocketSession;
 import io.micronaut.websocket.annotation.ClientWebSocket;
 import io.micronaut.websocket.annotation.OnMessage;
 import io.micronaut.websocket.annotation.OnOpen;
-import io.reactivex.Flowable;
 
-@ClientWebSocket("/")
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+@ClientWebSocket("http://localhost:8546")
 public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
-    private WebSocketSession session;
-    private HttpRequest request;
-    private String topic;
-    private String username;
-    private Flowable<String> flow;
-    @OnOpen
-    public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) {
-        this.topic = topic;
-        this.username = username;
-        this.session = session;
-        this.request = request;
-    }
-    public String getTopic() {
-        return topic;
-    }
+  private WebSocketSession session;
+  private HttpRequest request;
+  private String topic;
+  private String username;
+  private Queue<String> messages = new ConcurrentLinkedQueue<>();
 
-    public String getUsername() {
-        return username;
-    }
+  @OnOpen
+  public void onOpen(String topic, String username, WebSocketSession session, HttpRequest request) {
+    this.topic = topic;
+    this.username = username;
+    this.session = session;
+    this.request = request;
+  }
 
-    public Flowable<String> getFlow() {
-        return flow;
-    }
+  public String getTopic() {
+    return topic;
+  }
 
-    public WebSocketSession getSession() {
-        return session;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public HttpRequest getRequest() {
-        return request;
-    }
+  public Queue<String> getMessages() {
+    return messages;
+  }
 
-    @OnMessage
-    public Flowable<String> onMessage(
-            Flowable<String> messages) {
-            return messages;
-    }
+  public WebSocketSession getSession() {
+    return session;
+  }
 
+  public HttpRequest getRequest() {
+    return request;
+  }
+
+  @OnMessage
+  public void onMessage(String message) {
+    messages.offer(message);
+  }
 }
-

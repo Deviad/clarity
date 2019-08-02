@@ -7,6 +7,7 @@ import io.micronaut.websocket.annotation.OnClose;
 import io.micronaut.websocket.annotation.OnMessage;
 import io.micronaut.websocket.annotation.OnOpen;
 import io.micronaut.websocket.annotation.ServerWebSocket;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ServerWebSocket("/ws/{topic}/{username}")
+@Slf4j
 public class CustomWebsocketServer {
 
   private WebSocketBroadcaster broadcaster;
@@ -38,17 +40,21 @@ public class CustomWebsocketServer {
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-
-      broadcaster.broadcastSync(
-              client.connect(map).flatMap(EthereumLowLevelWebsocketClient::getFlow), MediaType.TEXT_EVENT_STREAM_TYPE, isValid(topic, session));
-
-
+    client
+        .connect(map)
+        .map(EthereumLowLevelWebsocketClient::getMessages)
+        .doOnNext(
+            x ->
+                broadcaster.broadcastSync(
+                    x.poll(), MediaType.TEXT_EVENT_STREAM_TYPE, (o)->true))
+        .doOnError(Throwable::printStackTrace)
+        .subscribe();
   }
 
   @OnClose
   public void onClose(String topic, String username, WebSocketSession session) {
     String msg = "[" + username + "] Disconnected!";
-    broadcaster.broadcastSync(msg, isValid(topic, session));
+    broadcaster.broadcastSync(msg, (o)->true);
   }
 
   private Predicate<WebSocketSession> isValid(String topic, WebSocketSession session) {

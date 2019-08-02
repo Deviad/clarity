@@ -17,14 +17,10 @@ import java.util.stream.Stream;
 public class EthereumWebsocketClient  {
 
     private RxWebSocketClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
-
-    public EthereumWebsocketClient(@Client("ws://localhost:8546") RxWebSocketClient client) {
+    public EthereumWebsocketClient(@Client("http://localhost:8546") RxWebSocketClient client) {
         this.client = client;
     }
-
     public Flowable<EthereumLowLevelWebsocketClient> connect(Map<String, Object> reqParams) {
-
         return client.connect(EthereumLowLevelWebsocketClient.class, reqParams);
 
     }
