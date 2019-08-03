@@ -20,10 +20,8 @@ import java.util.stream.Stream;
 public class CustomWebsocketServer {
 
   private WebSocketBroadcaster broadcaster;
-  private EthereumWebsocketClient client;
 
-  public CustomWebsocketServer(WebSocketBroadcaster broadcaster, EthereumWebsocketClient client) {
-    this.client = client;
+  public CustomWebsocketServer(WebSocketBroadcaster broadcaster) {
     this.broadcaster = broadcaster;
   }
 
@@ -38,10 +36,7 @@ public class CustomWebsocketServer {
                 new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    broadcaster.broadcastAsync(
-        client.connect(map).flatMap(EthereumLowLevelWebsocketClient::getMessage).toFuture(),
-        MediaType.TEXT_EVENT_STREAM_TYPE,
-        (o)->true);
+    broadcaster.broadcastAsync(message);
   }
 
   @OnClose
