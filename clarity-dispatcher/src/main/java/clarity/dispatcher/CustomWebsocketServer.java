@@ -28,33 +28,24 @@ public class CustomWebsocketServer {
   }
 
   @OnOpen
-  public void onOpen(String topic, String username, WebSocketSession session) {}
+  public void onOpen(WebSocketSession session) {}
 
   @OnMessage
-  public void onMessage(String topic, String username, String message, WebSocketSession session) {
-    //        String msg = "[" + username + "] " + message;
+  public void onMessage(String message, WebSocketSession session) {
     Map<String, Object> map =
         Stream.of(
                 new AbstractMap.SimpleEntry<>("id", 1),
                 new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-    client
-        .connect(map)
-        .map(EthereumLowLevelWebsocketClient::getMessages)
-        .doOnNext(
-            x ->
-                broadcaster.broadcastSync(
-                    x.poll(), MediaType.TEXT_EVENT_STREAM_TYPE, (o)->true))
-        .doOnError(Throwable::printStackTrace)
-        .subscribe();
+    broadcaster.broadcastSync(
+        client.connect(map).map(EthereumLowLevelWebsocketClient::getMessages).subscribe(),
+        MediaType.TEXT_EVENT_STREAM_TYPE,
+        (o)->true);
   }
 
   @OnClose
-  public void onClose(String topic, String username, WebSocketSession session) {
-    String msg = "[" + username + "] Disconnected!";
-    broadcaster.broadcastSync(msg, (o)->true);
+  public void onClose(WebSocketSession session) {
   }
 
   private Predicate<WebSocketSession> isValid(String topic, WebSocketSession session) {
