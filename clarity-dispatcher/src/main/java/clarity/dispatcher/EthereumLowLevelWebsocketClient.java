@@ -6,17 +6,14 @@ import io.micronaut.websocket.annotation.ClientWebSocket;
 import io.micronaut.websocket.annotation.OnMessage;
 import io.micronaut.websocket.annotation.OnOpen;
 import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
 
-import java.util.Queue;
-
-@ClientWebSocket("http://localhost:8546")
+@ClientWebSocket("ws://localhost:8546")
 public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
   private WebSocketSession session;
   private HttpRequest request;
   private String topic;
   private String username;
-  private Flowable<Queue<String>> messages;
+  private Flowable<String> message;
 
   @OnOpen
   public void onOpen(WebSocketSession session, HttpRequest request) {
@@ -34,10 +31,8 @@ public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
     return username;
   }
 
-  public Flowable<Disposable> getMessages() {
-    if( messages != null)
-      return Flowable.just(messages.filter(x-> x != null && !x.isEmpty()).map(Queue::poll).subscribe());
-    return Flowable.empty();
+  public Flowable<String> getMessage() {
+    return message;
   }
 
   public WebSocketSession getSession() {
@@ -50,6 +45,6 @@ public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
 
   @OnMessage
   public void onMessage(String message) {
-    messages.map(x-> x.offer(message)).subscribe();
+    this.message = Flowable.just(message);
   }
 }
