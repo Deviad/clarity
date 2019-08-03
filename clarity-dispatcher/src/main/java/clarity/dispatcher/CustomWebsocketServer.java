@@ -38,7 +38,7 @@ public class CustomWebsocketServer {
                 new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    broadcaster.broadcastSync(
+    broadcaster.broadcast(
         client.connect(map).map(EthereumLowLevelWebsocketClient::getMessages).subscribe(),
         MediaType.TEXT_EVENT_STREAM_TYPE,
         (o)->true);

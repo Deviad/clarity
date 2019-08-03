@@ -34,8 +34,10 @@ public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
     return username;
   }
 
-  public Disposable getMessages() {
-    return messages.subscribe(Queue::poll);
+  public Flowable<Disposable> getMessages() {
+    if( messages != null)
+      return Flowable.just(messages.filter(x-> x != null && !x.isEmpty()).map(Queue::poll).subscribe());
+    return Flowable.empty();
   }
 
   public WebSocketSession getSession() {
@@ -47,7 +49,7 @@ public abstract class EthereumLowLevelWebsocketClient implements AutoCloseable {
   }
 
   @OnMessage
-  public void onMessage(Flowable<String> message) {
-    messages.map(x-> x.offer(message.blockingFirst())).subscribe();
+  public void onMessage(String message) {
+    messages.map(x-> x.offer(message)).subscribe();
   }
 }
