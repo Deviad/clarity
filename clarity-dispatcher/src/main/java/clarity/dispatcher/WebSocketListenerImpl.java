@@ -1,6 +1,7 @@
 package clarity.dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micronaut.runtime.http.scope.RequestScope;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -8,10 +9,9 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 @Slf4j
-@Singleton
+@RequestScope
 public class WebSocketListenerImpl extends WebSocketListener {
 
   private static final int NORMAL_CLOSURE_STATUS = 1000;
