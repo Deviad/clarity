@@ -10,6 +10,7 @@ import org.jooq.lambda.Unchecked;
 import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,8 +19,15 @@ import java.util.stream.Stream;
 @Controller
 public class ControllerExample {
 
-  @Inject MyRxBus<String> bus;
-  @Inject WebSocketListenerImpl listener;
+  private WebSocketListenerImpl listener;
+  private MyRxBean<String> outputBus;
+  private MyRxBean<String> inputBus;
+
+  ControllerExample(WebSocketListenerImpl listener, @Named("INPUT") MyRxBean<String> inputBus, @Named("OUTPUT") MyRxBean<String> outputBus) {
+    this.listener = listener;
+    this.inputBus = inputBus;
+    this.outputBus = outputBus;
+  }
 
   @Get(value = "/ssetest")
   @SneakyThrows
@@ -32,7 +40,7 @@ public class ControllerExample {
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     whatever(map);
-    return Flux.from(bus.getEvents().replay(0).autoConnect());
+    return Flux.from(outputBus.getEvents());
   }
 
   @SneakyThrows
@@ -41,13 +49,8 @@ public class ControllerExample {
     String json = Unchecked.supplier(() -> mapper.writeValueAsString(map)).get();
     final OkHttpClient client = new OkHttpClient();
     final Request request = new Request.Builder().url("ws://127.0.0.1:8546").build();
+    inputBus.setObject(json);
     client.newWebSocket(request, listener).send(json);
     client.dispatcher().executorService().shutdown();
-    //    try (Response response = client.newCall(request).execute()) {
-    //      if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-    //
-    //      System.out.println(Unchecked.supplier(()->response.body().string()).get());
-    //    }
-
   }
 }

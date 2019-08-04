@@ -6,25 +6,24 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
-import org.jooq.lambda.Unchecked;
 
-import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Singleton
 public class WebSocketListenerImpl extends WebSocketListener {
 
   private static final int NORMAL_CLOSURE_STATUS = 1000;
-  private MyRxBus<String> bus;
+  private MyRxBean<String> outputBus;
+  private MyRxBean<String> inputBus;
 
-  @Inject
-  WebSocketListenerImpl(MyRxBus<String> bus) {
-    this.bus = bus;
+  private String json = null;
+
+  WebSocketListenerImpl(
+      @Named("OUTPUT") MyRxBean<String> outputBus, @Named("INPUT") MyRxBean<String> inputBus) {
+    this.outputBus = outputBus;
+    this.inputBus = inputBus;
   }
 
   @Override
@@ -33,15 +32,11 @@ public class WebSocketListenerImpl extends WebSocketListener {
   @Override
   public void onMessage(WebSocket webSocket, String text) {
     log.info(text);
-    Map<String, Object> map =
-        Stream.of(
-                new AbstractMap.SimpleEntry<>("id", 1),
-                new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
-                new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     final ObjectMapper mapper = new ObjectMapper();
-    String json = Unchecked.supplier(() -> mapper.writeValueAsString(map)).get();
-    bus.setObject(text);
+    if (json == null && inputBus.getEvents().replay(1).autoConnect().next().block() != null) {
+      json = inputBus.getEvents().replay(1).autoConnect().next().block();
+    }
+    outputBus.setObject(text);
     webSocket.send(json);
   }
 
