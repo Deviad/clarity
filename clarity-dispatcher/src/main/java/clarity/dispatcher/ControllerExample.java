@@ -3,7 +3,6 @@ package clarity.dispatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.reactivex.Flowable;
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,12 +35,19 @@ public class ControllerExample {
     return Flux.from(bus.getEvents().replay(0).autoConnect());
   }
 
+  @SneakyThrows
   private void whatever(Map<String, Object> map) {
-    ObjectMapper mapper = new ObjectMapper();
+    final ObjectMapper mapper = new ObjectMapper();
     String json = Unchecked.supplier(() -> mapper.writeValueAsString(map)).get();
-    OkHttpClient client = new OkHttpClient();
-    Request request = new Request.Builder().url("ws://localhost:8546").build();
+    final OkHttpClient client = new OkHttpClient();
+    final Request request = new Request.Builder().url("ws://127.0.0.1:8546").build();
     client.newWebSocket(request, listener).send(json);
     client.dispatcher().executorService().shutdown();
+    //    try (Response response = client.newCall(request).execute()) {
+    //      if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+    //
+    //      System.out.println(Unchecked.supplier(()->response.body().string()).get());
+    //    }
+
   }
 }
