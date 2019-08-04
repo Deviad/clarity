@@ -141,6 +141,11 @@
             <artifactId>jool</artifactId>
             <version>${jool.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.2.11.RELEASE</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.squareup.okhttp</groupId>-->
 <!--            <artifactId>okhttp</artifactId>-->

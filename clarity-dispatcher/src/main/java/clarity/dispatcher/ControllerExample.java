@@ -1,16 +1,14 @@
 package clarity.dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import lombok.SneakyThrows;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.jooq.lambda.Unchecked;
+import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
 import java.util.AbstractMap;
@@ -21,13 +19,12 @@ import java.util.stream.Stream;
 @Controller
 public class ControllerExample {
 
-  @Inject
-  MyRxBus<String> bus;
-
+  @Inject MyRxBus<String> bus;
+  @Inject WebSocketListenerImpl listener;
 
   @Get(value = "/ssetest")
   @SneakyThrows
-  Observable<String> test() {
+  Flux<String> test() {
 
     Map<String, Object> map =
         Stream.of(
@@ -36,16 +33,15 @@ public class ControllerExample {
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     whatever(map);
-    return bus.getEvents();
+    return Flux.from(bus.getEvents().replay(0).autoConnect());
   }
 
   private void whatever(Map<String, Object> map) {
     ObjectMapper mapper = new ObjectMapper();
-    String json = Unchecked.supplier(()->mapper.writeValueAsString(map)).get();
+    String json = Unchecked.supplier(() -> mapper.writeValueAsString(map)).get();
     OkHttpClient client = new OkHttpClient();
     Request request = new Request.Builder().url("ws://localhost:8546").build();
-    WebSocketListenerImpl listener = new WebSocketListenerImpl();
     client.newWebSocket(request, listener).send(json);
+    client.dispatcher().executorService().shutdown();
   }
-
 }

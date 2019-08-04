@@ -1,15 +1,14 @@
 package clarity.dispatcher;
 
-import io.micronaut.context.annotation.Bean;
-import io.reactivex.Observable;
-import io.reactivex.subjects.PublishSubject;
+import io.micronaut.context.annotation.Context;
+import reactor.core.publisher.EmitterProcessor;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class MyRxBus<T> {
 
-    private PublishSubject<T> subject = PublishSubject.create();
+    private EmitterProcessor<T> subject = EmitterProcessor.create();
 
     /**
      * Pass any event down to event listeners.
@@ -22,7 +21,7 @@ public class MyRxBus<T> {
      * Subscribe to this Observable. On event, do something
      * e.g. replace a fragment
      */
-    public Observable<T> getEvents() {
+    public EmitterProcessor<T> getEvents() {
         return subject;
     }
 }
