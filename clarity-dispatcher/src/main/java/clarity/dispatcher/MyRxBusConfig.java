@@ -2,24 +2,23 @@ package clarity.dispatcher;
 
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Context;
+import io.micronaut.context.annotation.Factory;
 import io.micronaut.runtime.http.scope.RequestScope;
 
 import javax.inject.Named;
+import javax.inject.Qualifier;
+import javax.inject.Singleton;
 
-@Context
+@Factory
 public class MyRxBusConfig {
 
-  @Bean
-  @RequestScope
-  @Named("INPUT")
-  MyRxBean<String> inputMyRxBean() {
-    return new MyRxBean<>();
+  @Singleton
+  MyRxInputBean<String> inputMyRxBean() {
+    return new MyRxInputBean<>();
   }
 
-  @Bean
-  @RequestScope
-  @Named("OUTPUT")
-  MyRxBean<String> outputMyRxBean() {
-    return new MyRxBean<>();
+  @Singleton
+  MyRxOutputBean<String> outputMyRxBean() {
+    return new MyRxOutputBean<>();
   }
 }

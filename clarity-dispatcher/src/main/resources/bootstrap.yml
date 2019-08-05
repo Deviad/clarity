@@ -7,6 +7,6 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8888/
+      uri: http://localhost:8888/${micronaut.application.name}
       retry-attempts: 4 # optional, number of times to retry
       retry-delay: 2s # optional, delay between retries

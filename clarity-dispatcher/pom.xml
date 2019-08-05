@@ -6,7 +6,7 @@
     <artifactId>clarity-dispatcher</artifactId>
     <version>0.1</version>
     <properties>
-        <micronaut.version>1.2.0.RC2</micronaut.version>
+        <micronaut.version>1.2.0.BUILD-SNAPSHOT</micronaut.version>
         <jdk.version>11</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <exec.mainClass>clarity.dispatcher.Application</exec.mainClass>
@@ -19,6 +19,16 @@
         <repository>
             <id>jcenter.bintray.com</id>
             <url>https://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>oss.sonatype.org-snapshot</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
     <dependencyManagement>
@@ -227,6 +237,11 @@
                         </compilerArgs>
                         <annotationProcessorPaths>
                             <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
                                 <groupId>io.micronaut</groupId>
                                 <artifactId>micronaut-inject-java</artifactId>
                                 <version>${micronaut.version}</version>
@@ -240,11 +255,6 @@
                                 <groupId>org.mapstruct</groupId>
                                 <artifactId>mapstruct-processor</artifactId>
                                 <version>${org.mapstruct.version}</version>
-                            </path>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
                             </path>
                             <!-- other annotation processors -->
                         </annotationProcessorPaths>

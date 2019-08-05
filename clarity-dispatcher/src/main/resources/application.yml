@@ -22,14 +22,13 @@ tracing:
       probability: 0.1
 jackson:
   bean-introspection-module: true
-eureka:
-  client:
-    registration:
-      enabled: true
+#eureka:
+#  client:
+#    registration:
+#      enabled: true
 #    defaultZone: "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}"
 
 #kafka:
 #  bootstrap:
 #    servers: localhost:9092
-
 

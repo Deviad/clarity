@@ -3,7 +3,7 @@ package clarity.dispatcher;
 
 import reactor.core.publisher.EmitterProcessor;
 
-class MyRxBean<T> {
+class MyRxOutputBean<T> {
 
     private EmitterProcessor<T> subject = EmitterProcessor.create();
 

@@ -1,6 +1,7 @@
 package clarity.dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import lombok.SneakyThrows;
@@ -16,20 +17,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Controller
+@Controller("/eth")
 public class ControllerExample {
 
   private WebSocketListenerImpl listener;
-  private MyRxBean<String> outputBus;
-  private MyRxBean<String> inputBus;
+  private MyRxOutputBean<String> outputBus;
+  private MyRxInputBean<String> inputBus;
 
-  ControllerExample(WebSocketListenerImpl listener, @Named("INPUT") MyRxBean<String> inputBus, @Named("OUTPUT") MyRxBean<String> outputBus) {
+  @Inject
+  ControllerExample(WebSocketListenerImpl listener, MyRxInputBean<String> inputBus, MyRxOutputBean<String> outputBus) {
     this.listener = listener;
     this.inputBus = inputBus;
     this.outputBus = outputBus;
   }
 
-  @Get(value = "/ssetest")
+  @Get(value = "/ssetest", produces = MediaType.TEXT_EVENT_STREAM)
   @SneakyThrows
   Flux<String> test() {
 
@@ -40,7 +42,7 @@ public class ControllerExample {
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     whatever(map);
-    return Flux.from(outputBus.getEvents());
+    return Flux.from(outputBus.getEvents().replay(1).autoConnect());
   }
 
   @SneakyThrows
