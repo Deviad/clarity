@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,13 +59,23 @@ public class ControllerExample {
         .doOnNext(x -> createConnection(json))
         .publishOn(Schedulers.elastic())
         .subscribeOn(Schedulers.single())
-        .flatMap(x -> outputBus.getEvents().replay(1).autoConnect().map(Output::getText));
+        .flatMap(x -> outputBus.getEvents().replay(1).autoConnect().map(Output::getText))
+        .distinct();
   }
 
   private void createConnection(String json) {
-    final OkHttpClient client = new OkHttpClient();
-    final Request request = new Request.Builder().url("ws://127.0.0.1:8546").build();
-    inputBus.setObject(json);
-    client.newWebSocket(request, listener).send(json);
+    OkHttpClient client = null;
+    Request request = null;
+    try {
+      client = new OkHttpClient();
+      request = new Request.Builder().url("ws://127.0.0.1:8546").build();
+      inputBus.setObject(json);
+      client.newWebSocket(request, listener).send(json);
+    } catch (Exception ex) {
+      throw new RuntimeException(ex);
+    } finally {
+      Objects.requireNonNull(client).dispatcher().executorService().shutdown();
+      request = null;
+    }
   }
 }

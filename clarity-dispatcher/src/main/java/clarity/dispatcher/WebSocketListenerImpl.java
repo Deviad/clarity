@@ -37,6 +37,7 @@ public class WebSocketListenerImpl extends WebSocketListener {
     output.setText(text);
     output.setWebSocket(webSocket);
     outputBus.setObject(output);
+//    webSocket.send(json);
   }
 
   @Override
