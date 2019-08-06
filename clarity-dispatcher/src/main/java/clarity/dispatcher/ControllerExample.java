@@ -5,27 +5,30 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.jooq.lambda.Unchecked;
 import reactor.core.publisher.Flux;
 
 import javax.inject.Inject;
-import javax.inject.Named;
+import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller("/eth")
+@Slf4j
 public class ControllerExample {
-
   private WebSocketListenerImpl listener;
-  private MyRxOutputBean<String> outputBus;
+  private MyRxOutputBean<Output> outputBus;
   private MyRxInputBean<String> inputBus;
-
   @Inject
-  ControllerExample(WebSocketListenerImpl listener, MyRxInputBean<String> inputBus, MyRxOutputBean<String> outputBus) {
+  ControllerExample(
+      WebSocketListenerImpl listener,
+      MyRxInputBean<String> inputBus,
+      MyRxOutputBean<Output> outputBus) {
     this.listener = listener;
     this.inputBus = inputBus;
     this.outputBus = outputBus;
@@ -42,7 +45,15 @@ public class ControllerExample {
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     whatever(map);
-    return Flux.from(outputBus.getEvents().replay(1).autoConnect());
+
+    return Flux.interval(Duration.ofMillis(500))
+        .flatMap(
+            i ->
+                Flux.from(outputBus.getEvents().replay(1).autoConnect().map(Output::getText))
+                    .doFinally(
+                        signalType -> {
+                          outputBus.getEvents().doOnNext(x -> x.getWebSocket().cancel()).subscribe();
+                        }));
   }
 
   @SneakyThrows
@@ -55,4 +66,11 @@ public class ControllerExample {
     client.newWebSocket(request, listener).send(json);
     client.dispatcher().executorService().shutdown();
   }
+
+  //  private Flux<Long> getHeartbeatStream() {
+  //    return Flux.interval(Duration.ofSeconds(2))
+  //            .doFinally(signalType ->System.out.println("END"));
+  //  }
+
+  public interface Notification {}
 }

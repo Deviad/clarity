@@ -1,6 +1,7 @@
 package clarity.dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jnr.ffi.annotations.Out;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -16,7 +17,7 @@ import javax.inject.Singleton;
 public class WebSocketListenerImpl extends WebSocketListener {
 
   private static final int NORMAL_CLOSURE_STATUS = 1000;
-  @Inject private MyRxOutputBean<String> outputBus;
+  @Inject private MyRxOutputBean<Output> outputBus;
   @Inject private MyRxInputBean<String> inputBus;
 
   private String json = null;
@@ -30,11 +31,14 @@ public class WebSocketListenerImpl extends WebSocketListener {
 
     final ConnectableFlux<String> replay = inputBus.getEvents().replay(1);
 
-    final ObjectMapper mapper = new ObjectMapper();
     if (json == null && replay.autoConnect().hasElements().block()) {
       json = replay.autoConnect().next().block();
     }
-    outputBus.setObject(text);
+
+    Output output = new Output();
+    output.setText(text);
+    output.setWebSocket(webSocket);
+    outputBus.setObject(output);
     webSocket.send(json);
   }
 
