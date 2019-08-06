@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.jooq.lambda.Unchecked;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import javax.inject.Inject;
 import java.time.Duration;
@@ -24,6 +25,7 @@ public class ControllerExample {
   private WebSocketListenerImpl listener;
   private MyRxOutputBean<Output> outputBus;
   private MyRxInputBean<String> inputBus;
+
   @Inject
   ControllerExample(
       WebSocketListenerImpl listener,
@@ -44,33 +46,25 @@ public class ControllerExample {
                 new AbstractMap.SimpleEntry<>("method", "eth_subscribe"),
                 new AbstractMap.SimpleEntry<>("params", new Object[] {"newHeads"}))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    whatever(map);
-
-    return Flux.interval(Duration.ofMillis(500))
-        .flatMap(
-            i ->
-                Flux.from(outputBus.getEvents().replay(1).autoConnect().map(Output::getText))
-                    .doFinally(
-                        signalType -> {
-                          outputBus.getEvents().doOnNext(x -> x.getWebSocket().cancel()).subscribe();
-                        }));
+    return connectionFactory(map);
   }
 
   @SneakyThrows
-  private void whatever(Map<String, Object> map) {
+  private Flux<String> connectionFactory(Map<String, Object> map) {
     final ObjectMapper mapper = new ObjectMapper();
     String json = Unchecked.supplier(() -> mapper.writeValueAsString(map)).get();
+
+    return Flux.interval(Duration.ofMillis(500))
+        .doOnNext(x -> createConnection(json))
+        .publishOn(Schedulers.elastic())
+        .subscribeOn(Schedulers.single())
+        .flatMap(x -> outputBus.getEvents().replay(1).autoConnect().map(Output::getText));
+  }
+
+  private void createConnection(String json) {
     final OkHttpClient client = new OkHttpClient();
     final Request request = new Request.Builder().url("ws://127.0.0.1:8546").build();
     inputBus.setObject(json);
     client.newWebSocket(request, listener).send(json);
-    client.dispatcher().executorService().shutdown();
   }
-
-  //  private Flux<Long> getHeartbeatStream() {
-  //    return Flux.interval(Duration.ofSeconds(2))
-  //            .doFinally(signalType ->System.out.println("END"));
-  //  }
-
-  public interface Notification {}
 }

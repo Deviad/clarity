@@ -1,7 +1,5 @@
 package clarity.dispatcher;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jnr.ffi.annotations.Out;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -39,7 +37,6 @@ public class WebSocketListenerImpl extends WebSocketListener {
     output.setText(text);
     output.setWebSocket(webSocket);
     outputBus.setObject(output);
-    webSocket.send(json);
   }
 
   @Override
