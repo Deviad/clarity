@@ -1,43 +1,38 @@
 package clarity.dispatcher;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
-import reactor.core.publisher.ConnectableFlux;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Slf4j
-@Singleton
 public class WebSocketListenerImpl extends WebSocketListener {
 
   private static final int NORMAL_CLOSURE_STATUS = 1000;
-  @Inject private MyRxOutputBean<Output> outputBus;
-  @Inject private MyRxInputBean<String> inputBus;
+  @Getter
+  private final MyRxOutputBean<Output> outputBus;
 
-  private String json = null;
+  private String json;
+
+  public WebSocketListenerImpl(MyRxOutputBean<Output> outputBus, String json) {
+      this.outputBus = outputBus;
+      this.json = json;
+  }
 
   @Override
-  public void onOpen(WebSocket webSocket, Response response) {}
+  public void onOpen(WebSocket webSocket, Response response) {
+  }
 
   @Override
   public void onMessage(WebSocket webSocket, String text) {
     log.info(text);
 
-    final ConnectableFlux<String> replay = inputBus.getEvents().replay(1);
-
-    if (json == null && replay.autoConnect().hasElements().block()) {
-      json = replay.autoConnect().next().block();
-    }
-
     Output output = new Output();
     output.setText(text);
-    output.setWebSocket(webSocket);
     outputBus.setObject(output);
-//    webSocket.send(json);
+    webSocket.send(json);
   }
 
   @Override
