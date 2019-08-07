@@ -1,9 +1,11 @@
 package clarity.dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micronaut.context.annotation.Prototype;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.runtime.http.scope.RequestScope;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller("/eth")
+@RequestScope
 @Slf4j
 public class ControllerExample {
   private ConnectionFacade cf;
