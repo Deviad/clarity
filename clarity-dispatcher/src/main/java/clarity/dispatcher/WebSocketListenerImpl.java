@@ -11,19 +11,17 @@ import okio.ByteString;
 public class WebSocketListenerImpl extends WebSocketListener {
 
   private static final int NORMAL_CLOSURE_STATUS = 1000;
-  @Getter
-  private final MyRxOutputBean<Output> outputBus;
+  @Getter private final MyRxOutputBean<Output> outputBus;
 
   private String json;
 
   public WebSocketListenerImpl(MyRxOutputBean<Output> outputBus, String json) {
-      this.outputBus = outputBus;
-      this.json = json;
+    this.outputBus = outputBus;
+    this.json = json;
   }
 
   @Override
-  public void onOpen(WebSocket webSocket, Response response) {
-  }
+  public void onOpen(WebSocket webSocket, Response response) {}
 
   @Override
   public void onMessage(WebSocket webSocket, String text) {

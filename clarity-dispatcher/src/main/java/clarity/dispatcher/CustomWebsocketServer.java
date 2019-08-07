@@ -1,6 +1,5 @@
 package clarity.dispatcher;
 
-import io.micronaut.http.MediaType;
 import io.micronaut.websocket.WebSocketBroadcaster;
 import io.micronaut.websocket.WebSocketSession;
 import io.micronaut.websocket.annotation.OnClose;
@@ -40,8 +39,7 @@ public class CustomWebsocketServer {
   }
 
   @OnClose
-  public void onClose(WebSocketSession session) {
-  }
+  public void onClose(WebSocketSession session) {}
 
   private Predicate<WebSocketSession> isValid(String topic, WebSocketSession session) {
     return s ->

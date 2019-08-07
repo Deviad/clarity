@@ -1,4 +1,3 @@
-
 security:
   enabled: true
   endpoints:

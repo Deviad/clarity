@@ -8,8 +8,8 @@ import okhttp3.Request;
 public class ConnectionFacade implements AutoCloseable {
 
   @Getter private final MyRxOutputBean<Output> outputBus = new MyRxOutputBean<>();
-  @Getter @Setter private OkHttpClient client = new OkHttpClient();
   private final Request request = new Request.Builder().url("ws://127.0.0.1:8546").build();
+  @Getter @Setter private OkHttpClient client = new OkHttpClient();
   @Getter @Setter private WebSocketListenerImpl webSocketListener;
 
   void connect(String json) {

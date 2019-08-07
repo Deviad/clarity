@@ -8,22 +8,21 @@ import org.web3j.protocol.http.HttpService;
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 
-
 @Singleton
 @Data
 public class Web3jService {
 
-    @Value("${infura.https-endpoint}")
-    private String infuraHttpsEndpoint;
+  @Value("${infura.https-endpoint}")
+  private String infuraHttpsEndpoint;
 
-    @Value("${infura.ws-endpoint}")
-    private String infuraWsEndpoint;
+  @Value("${infura.ws-endpoint}")
+  private String infuraWsEndpoint;
 
-    private Web3j web3;
+  private Web3j web3;
 
-    @PostConstruct
-    public void init() {
-        System.out.println("testtt " + infuraHttpsEndpoint);
-        web3 = Web3j.build(new HttpService(infuraHttpsEndpoint));
-    }
+  @PostConstruct
+  public void init() {
+    System.out.println("testtt " + infuraHttpsEndpoint);
+    web3 = Web3j.build(new HttpService(infuraHttpsEndpoint));
+  }
 }

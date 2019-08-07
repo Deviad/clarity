@@ -11,7 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.Map;
@@ -27,7 +26,6 @@ public class ControllerExample {
   void init() {
     cf = new ConnectionFacade();
   }
-
 
   @Get(value = "/ssetest", produces = MediaType.TEXT_EVENT_STREAM)
   @SneakyThrows
