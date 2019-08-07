@@ -31,6 +31,7 @@ public class WebSocketListenerImpl extends WebSocketListener {
 
     Output output = new Output();
     output.setText(text);
+    output.setWebSocket(webSocket);
     outputBus.setObject(output);
     webSocket.send(json);
   }

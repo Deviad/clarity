@@ -28,10 +28,6 @@ public class ControllerExample {
     cf = new ConnectionFacade();
   }
 
-//  @PreDestroy
-//  void preDestroy() {
-//    cf.getClient().
-//  }
 
   @Get(value = "/ssetest", produces = MediaType.TEXT_EVENT_STREAM)
   @SneakyThrows
@@ -50,20 +46,15 @@ public class ControllerExample {
   private Flux<String> connectionFactory(Map<String, Object> map) {
     final ObjectMapper mapper = new ObjectMapper();
     String json = Unchecked.supplier(() -> mapper.writeValueAsString(map)).get();
-    Flux<String> result;
 
-    try {
-      result =
-          Flux.interval(Duration.ofMillis(500))
-              .doOnNext(x -> cf.connect(json))
-              .publishOn(Schedulers.elastic())
-              .subscribeOn(Schedulers.single())
-              .flatMap(
-                  x -> cf.getOutputBus().getEvents().replay(1).autoConnect().map(Output::getText))
-              .distinct();
-    } catch (Exception ex) {
-      throw new RuntimeException(ex);
-    }
-    return result;
+    return Flux.interval(Duration.ofMillis(500))
+        .doOnNext(x -> cf.connect(json))
+        .publishOn(Schedulers.elastic())
+        .subscribeOn(Schedulers.single())
+        .flatMap(x -> cf.getOutputBus().getEvents().replay(1).autoConnect().map(Output::getText))
+        .distinct()
+        .doFinally(
+            signalType ->
+                cf.getOutputBus().getEvents().doOnNext(x -> x.getWebSocket().cancel()).subscribe());
   }
 }
