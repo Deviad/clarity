@@ -6,7 +6,6 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>clarity-transaction-dispatcher</module>
         <module>clarity-eureka-server</module>
         <module>clarity-persistence</module>
         <module>clarity-config-server</module>
