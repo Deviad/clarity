@@ -1,7 +1,6 @@
 package clarity.dispatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micronaut.context.annotation.Prototype;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -23,11 +22,11 @@ import java.util.stream.Stream;
 @RequestScope
 @Slf4j
 public class ControllerExample {
-  private ConnectionFacade cf;
+  private EthereumWebsocketConnectionFacade cf;
 
   @PostConstruct
   void init() {
-    cf = new ConnectionFacade();
+    cf = new EthereumWebsocketConnectionFacade();
   }
 
   @Get(value = "/ssetest", produces = MediaType.TEXT_EVENT_STREAM)

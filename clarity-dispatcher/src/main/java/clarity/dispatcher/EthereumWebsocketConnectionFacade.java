@@ -5,7 +5,7 @@ import lombok.Setter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class ConnectionFacade implements AutoCloseable {
+public class EthereumWebsocketConnectionFacade implements AutoCloseable {
 
   @Getter private final MyRxOutputBean<Output> outputBus = new MyRxOutputBean<>();
   private final Request request = new Request.Builder().url("ws://127.0.0.1:8546").build();
