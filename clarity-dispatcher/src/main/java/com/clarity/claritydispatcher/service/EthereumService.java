@@ -1,6 +1,6 @@
 package com.clarity.claritydispatcher.service;
 
-import com.clarity.util.JSONAble;
+import com.clarity.claritydispatcher.util.JSONAble;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.util.Base64;
@@ -71,7 +71,7 @@ public class EthereumService implements JSONAble {
             .getWeb3()
             .ethGetTransactionCount(address, DefaultBlockParameterName.LATEST)
             .sendAsync()
-            .get();
+            .join();
     return ethGetTransactionCount.getTransactionCount();
   }
 

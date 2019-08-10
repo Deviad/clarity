@@ -1,5 +1,7 @@
-package com.clarity.claritydispatcher;
+package com.clarity.claritydispatcher.web.controller;
 
+import com.clarity.claritydispatcher.EthereumWebsocketConnectionFacade;
+import com.clarity.claritydispatcher.Output;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
@@ -18,10 +20,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Controller("/eth")
+@Controller("/sse/ethaccount")
 @RequestScope
 @Slf4j
-public class ControllerExample {
+public class EthereumAccountControllerSSE {
   private EthereumWebsocketConnectionFacade cf;
 
   @PostConstruct
@@ -29,9 +31,9 @@ public class ControllerExample {
     cf = new EthereumWebsocketConnectionFacade();
   }
 
-  @Get(value = "/ssetest", produces = MediaType.TEXT_EVENT_STREAM)
+  @Get(value = "/getbalance", produces = MediaType.TEXT_EVENT_STREAM)
   @SneakyThrows
-  Flux<String> test() {
+  Flux<String> getBalance() {
 
     Map<String, Object> map =
         Stream.of(

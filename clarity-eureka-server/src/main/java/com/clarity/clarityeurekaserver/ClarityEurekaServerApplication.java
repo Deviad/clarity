@@ -11,16 +11,15 @@ import java.util.TimeZone;
 @EnableEurekaServer
 public class ClarityEurekaServerApplication implements InitializingBean {
 
-    private void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(ClarityEurekaServerApplication.class, args);
+  }
 
-    public void afterPropertiesSet() {
-        started();
-    }
+  private void started() {
+    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+  }
 
-    public static void main(String[] args) {
-        SpringApplication.run(ClarityEurekaServerApplication.class, args);
-    }
-
+  public void afterPropertiesSet() {
+    started();
+  }
 }

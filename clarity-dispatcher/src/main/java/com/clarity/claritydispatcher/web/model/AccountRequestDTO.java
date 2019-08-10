@@ -1,5 +1,4 @@
-package com.clarity.web.model;
-
+package com.clarity.claritydispatcher.web.model;
 
 import lombok.*;
 
@@ -11,9 +10,11 @@ import javax.validation.constraints.Pattern;
 @ToString
 @Builder
 public class AccountRequestDTO {
-    @Pattern(regexp = "(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[A-Z]+)(?=.*[!@#$%^&*()_+\\[\\]{}:\\\\\";,.<>?|=-_]+).{8,20}")
-    @Getter
-    @Setter
-    @NotBlank
-    String password;
+  @Pattern(
+      regexp =
+          "(?=.*[a-z]+)(?=.*[0-9]+)(?=.*[A-Z]+)(?=.*[!@#$%^&*()_+\\[\\]{}:\\\\\";,.<>?|=-_]+).{8,20}")
+  @Getter
+  @Setter
+  @NotBlank
+  String password;
 }

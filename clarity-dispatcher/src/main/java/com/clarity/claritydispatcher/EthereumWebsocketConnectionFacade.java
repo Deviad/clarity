@@ -12,7 +12,7 @@ public class EthereumWebsocketConnectionFacade implements AutoCloseable {
   @Getter @Setter private OkHttpClient client = new OkHttpClient();
   @Getter @Setter private WebSocketListenerImpl webSocketListener;
 
-  void connect(String json) {
+  public void connect(String json) {
     WebSocketListenerImpl listener = new WebSocketListenerImpl(outputBus, json);
     client.newWebSocket(request, listener).send(json);
   }
