@@ -15,7 +15,6 @@ public class ClarityEurekaServerApplication implements InitializingBean {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
-    @Override
     public void afterPropertiesSet() {
         started();
     }

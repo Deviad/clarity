@@ -8,8 +8,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableConfigServer
 public class ClarityConfigServerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ClarityConfigServerApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(ClarityConfigServerApplication.class, args);
+  }
 }
