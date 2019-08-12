@@ -3,10 +3,13 @@ package com.clarity.claritydispatcher.web.handler;
 
 import an.awesome.pipelinr.Command;
 import com.clarity.claritydispatcher.service.EthereumService;
+import com.clarity.claritydispatcher.service.QueryPipeline;
 import com.clarity.claritydispatcher.service.ResponseFactory;
 import com.clarity.claritydispatcher.web.model.TransactionRequestDTO;
 import com.clarity.clarityshared.Query;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micronaut.context.annotation.Prototype;
+import io.micronaut.context.annotation.Requires;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,21 +19,22 @@ import org.java_websocket.util.Base64;
 import org.web3j.crypto.WalletFile;
 import reactor.core.publisher.Mono;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.math.BigDecimal;
 import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
+@NoArgsConstructor
 public class EthereumTransactionCreate implements Query<Mono<Map<String, Object>>> {
     @Getter
     private TransactionRequestDTO transactionRequestDTO;
     @Getter
     private EthereumService ethService;
 
-    @Singleton
     @NoArgsConstructor
-    static class Handler implements Command.Handler<EthereumTransactionCreate, Mono<Map<String, Object>>>, ResponseFactory {
+ public static class Handler implements Command.Handler<EthereumTransactionCreate, Mono<Map<String, Object>>>, ResponseFactory {
         @Override
         @SneakyThrows
         public Mono<Map<String, Object>> handle(EthereumTransactionCreate command) {

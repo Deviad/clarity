@@ -1,10 +1,18 @@
 package com.clarity.claritydispatcher.service;
 
-import javax.inject.Named;
-import java.lang.annotation.*;
+import an.awesome.pipelinr.Command;
+import an.awesome.pipelinr.PipelineStep;
+import an.awesome.pipelinr.Pipelinr;
+import an.awesome.pipelinr.StreamSupplier;
 
-@Documented
-@Named
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.PARAMETER})
-public @interface CommandPipeline {}
+public class CommandPipeline extends Pipelinr {
+
+  public CommandPipeline(StreamSupplier<Command.Handler> commandHandlers) {
+    super(commandHandlers);
+  }
+
+  public CommandPipeline(
+      StreamSupplier<Command.Handler> commandHandlers, StreamSupplier<PipelineStep> steps) {
+    super(commandHandlers, steps);
+  }
+}

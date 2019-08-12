@@ -31,7 +31,7 @@ public class EthereumAccountController {
   @Post(value = "/function/create")
   public Mono<Map<String, Object>> createAccount(@Valid AccountRequestDTO accountRequestDTO) {
     return pipelinrService
-        .getQueryPipeline()
+        .getQueryPipeline().orElseThrow()
         .send(new EthereumAccountCreate(accountRequestDTO, ethService));
   }
 
@@ -39,7 +39,7 @@ public class EthereumAccountController {
   public Mono<Map<String, Object>> getAccountBalance(
       @Valid AccountBalanceRequestDTO accountBalanceRequestDTO) {
     return pipelinrService
-        .getQueryPipeline()
+        .getQueryPipeline().orElseThrow()
         .send(new EthereumAccountGetBalance(accountBalanceRequestDTO, ethService));
   }
 }

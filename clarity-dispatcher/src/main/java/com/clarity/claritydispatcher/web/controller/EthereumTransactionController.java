@@ -37,7 +37,7 @@ public class EthereumTransactionController {
     @Post("/create")
     public Mono<Map<String, Object>> createTransaction(
            @Valid TransactionRequestDTO transactionRequestDTO) {
-        return pipelinrService.getQueryPipeline()
+        return pipelinrService.getQueryPipeline().orElseThrow()
                 .send(new EthereumTransactionCreate(transactionRequestDTO, ethereumService));
     }
 }

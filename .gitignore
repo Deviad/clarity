@@ -34,5 +34,6 @@ build/
 
 *~
 .DS_Store
-
+.gradle
 .dependency-reduced-pom.xml
+out
