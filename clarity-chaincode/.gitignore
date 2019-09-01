@@ -1,0 +1,10 @@
+#
+# SPDX-License-Identifier: Apache2
+#
+
+/.classpath
+/.gradle/
+/.project
+/.settings/
+/bin/
+/build/

@@ -5,6 +5,8 @@
 plugins {
     id 'java'
     id 'application'
+    id 'maven'
+    id 'maven-publish'
 
 }
 mainClassName = "com.clarity.claritydispatcher.Application"
@@ -27,6 +29,38 @@ repositories {
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceSets {
+        "main" {
+            java.srcDir("src/main/java")
+            resources.srcDir("resources")
+            setBuildDir(file("target"))
+            output.dir(file("$buildDir/$name"))
+            java.outputDir = file("$buildDir/$name")
+        }
+        "test" {
+            java.srcDir("test/java")
+            resources.srcDir("test-resources")
+            setBuildDir(file("target"))
+            output.dir(file("$buildDir/$name"))
+            java.outputDir = file("$buildDir/$name")
+        }
+    }
+}
+
+idea {
+    module {
+        // use the same output folders as gradle, so the pythonDevelop task works correctly
+        buildDir = file("target")
+        outputDir = sourceSets["main"].output.classesDirs.singleFile
+        testOutputDir = sourceSets["test"].output.classesDirs.singleFile
+        inheritOutputDirs = false
+    }
+}
+
+
 dependencies {
     implementation 'io.opentracing.brave:brave-opentracing:0.34.2'
     compile "io.micronaut:micronaut-tracing:${micronautVersion}"
@@ -39,10 +73,12 @@ dependencies {
     compile "io.micronaut:micronaut-validation:${micronautVersion}"
     compile "io.micronaut:micronaut-runtime:${micronautVersion}"
     compile "io.micronaut.configuration:micronaut-kafka:${micronautVersion}"
+    compile "io.micronaut.configuration:micronaut-kafka-streams:${micronautVersion}"
     compile "io.micronaut:micronaut-http-server-netty:${micronautVersion}"
     compile 'org.web3j:core:4.2.0'
+    compile "org.jooq:jool:0.9.14"
     compile 'io.projectreactor:reactor-core:3.2.11.RELEASE'
-    compile 'an.awesome:pipelinr:0.2'
+    compile 'an.awesome:pipelinr:0.3'
     runtime 'io.zipkin.brave:brave-instrumentation-http:5.6.5'
     runtime 'io.zipkin.reporter2:zipkin-reporter:2.10.0'
     runtime 'ch.qos.logback:logback-classic:1.2.3'

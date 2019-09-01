@@ -19,7 +19,8 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 bootJar {
     baseName = 'clarityconfigserver'
     version = '0.0.1-SNAPSHOT'
@@ -32,6 +33,7 @@ description = 'Configuration Server'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -52,8 +54,34 @@ eclipse {
     }
 }
 
-group = 'com.clarity'
-version = '0.0.1-SNAPSHOT'
-description = 'Configuration Server'
-buildDir = 'target'
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceSets {
+        "main" {
+            java.srcDir("src/main/java")
+            resources.srcDir("resources")
+            setBuildDir(file("target"))
+            output.dir(file("$buildDir/$name"))
+            java.outputDir = file("$buildDir/$name")
+        }
+        "test" {
+            java.srcDir("test/java")
+            resources.srcDir("test-resources")
+            setBuildDir(file("target"))
+            output.dir(file("$buildDir/$name"))
+            java.outputDir = file("$buildDir/$name")
+        }
+    }
+}
+
+idea {
+    module {
+        // use the same output folders as gradle, so the pythonDevelop task works correctly
+        buildDir = file("target")
+        outputDir = sourceSets["main"].output.classesDirs.singleFile
+        testOutputDir = sourceSets["test"].output.classesDirs.singleFile
+        inheritOutputDirs = false
+    }
+}
 

@@ -1,7 +1,6 @@
 version: "3.3"
 
 services:
-
   zookeeper:
     image: bitnami/zookeeper:latest
     environment:
@@ -9,13 +8,15 @@ services:
     networks:
       - clarity
     ports:
-      - 2181
+      - 2181:2181
 
-  kafka:
+  clarity-kafka:
     image: bitnami/kafka
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://clarity-kafka:9092
+
     volumes:
       - kafka:/bitnami/kafka:cached
     ports:
@@ -26,7 +27,7 @@ services:
     depends_on:
       - zookeeper
 
-  client-go:
+  clarity-client-go:
     image: ethereum/client-go
     volumes:
       - ethereum:/root:cached
@@ -34,26 +35,10 @@ services:
       - "8545:8545"
       - "8546:8546"
       - "30303:30303"
-    command: "--rpc --rpcaddr '0.0.0.0' --rpcport '8545' --ws --wsaddr '0.0.0.0' --wsport '8546'"
+    command: "--rpc --rpcaddr '0.0.0.0' --rpcport '8545' --ws --wsaddr '0.0.0.0' --wsport '8546' --syncmode 'light' --rinkeby"
     restart: always
     networks:
       - clarity
-
-  # node: -
-  #   image: "node:9"
-  #   user: "root"
-  #   working_dir: /home/node/app
-  #   volumes:
-  #     - ./api:/home/node/app
-  #     - node_modules:/home/node/app/node_modules
-  #   # ports:
-  #   #   - "3030:9000"
-  #   ports:
-  #     - "8080"
-  #   depends_on:
-  #     - web
-  #   command: "/bin/bash -c 'chown -R node /home/node/app; chmod 775 -R /home/node/app; su node -; npm install; npm run watch'"
-  #   network_mode: bridge
 volumes:
   kafka:
   ethereum:
