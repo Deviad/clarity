@@ -10,10 +10,13 @@ import io.micronaut.runtime.http.scope.RequestScope;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
+import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
+import java.net.URI;
 import java.time.Duration;
 import java.util.AbstractMap;
 import java.util.Map;
@@ -31,7 +34,7 @@ public class EthereumAccountControllerSSE {
     cf = new EthereumWebsocketConnectionFacade();
   }
 
-  @Get(value = "/getbalance", produces = MediaType.TEXT_EVENT_STREAM)
+  @Get(value = "/getnewheads", produces = MediaType.TEXT_EVENT_STREAM)
   @SneakyThrows
   Flux<String> getBalance() {
 
@@ -51,7 +54,6 @@ public class EthereumAccountControllerSSE {
 
     return Flux.interval(Duration.ofMillis(500))
         .doOnNext(x -> cf.connect(json))
-        .publishOn(Schedulers.elastic())
         .subscribeOn(Schedulers.single())
         .flatMap(x -> cf.getOutputBus().getEvents().replay(1).autoConnect().map(Output::getText))
         .distinct()
