@@ -31,7 +31,7 @@ public class EthereumAccountController {
   @Post(value = "/function/create")
   public Mono<Map<String, Object>> createAccount(@Valid AccountRequestDTO accountRequestDTO) {
     return pipelinrService
-        .getQueryPipeline().orElseThrow()
+        .getCommandPipeline().orElseThrow()
         .send(new EthereumAccountCreate(accountRequestDTO, ethService, kafkaservice));
   }
 

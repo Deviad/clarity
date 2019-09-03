@@ -12,7 +12,6 @@ import java.util.Optional;
 @Data
 public class PipelinrService {
   private final Optional<QueryPipeline> queryPipeline;
-
   private final Optional<CommandPipeline> commandPipeline;
 
   @Inject
