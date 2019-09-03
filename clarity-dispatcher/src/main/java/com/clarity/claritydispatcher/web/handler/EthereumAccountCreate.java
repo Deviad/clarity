@@ -2,7 +2,7 @@ package com.clarity.claritydispatcher.web.handler;
 
 import an.awesome.pipelinr.Command;
 import com.clarity.claritydispatcher.service.EthereumService;
-import com.clarity.claritydispatcher.service.KafkaProducerService;
+import com.clarity.claritydispatcher.service.KafkaService;
 import com.clarity.claritydispatcher.service.ResponseFactory;
 import com.clarity.claritydispatcher.web.model.AccountRequestDTO;
 import com.clarity.clarityshared.Query;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
-import static com.clarity.clarityshared.Topics.CREATE_HYPERLEDGER_WALLET;
+import static com.clarity.clarityshared.Topics.CREATE_HYPERLEDGER_WALLET_INPUT;
 
 @Slf4j
 @AllArgsConstructor
@@ -25,7 +25,7 @@ public class EthereumAccountCreate implements Query<Mono<Map<String, Object>>>, 
     @Getter
     private EthereumService ethService;
     @Getter
-    private KafkaProducerService kafkaProducer;
+    private KafkaService kafkaProducer;
     @NoArgsConstructor
     public static class Handler
             implements Command.Handler<EthereumAccountCreate, Mono<Map<String, Object>>>,
@@ -37,8 +37,7 @@ public class EthereumAccountCreate implements Query<Mono<Map<String, Object>>>, 
                     String password = command.accountRequestDTO.getPassword();
                     final Map<String, String> walletInfo = command.getEthService().createAccount(password);
 
-                    command.kafkaProducer.sendRecord(
-                            CREATE_HYPERLEDGER_WALLET,
+                    command.kafkaProducer.publishSentence(
                             command.accountRequestDTO.getUsername(),
                             command.accountRequestDTO.getUsername());
                     result = getSuccessResponse(walletInfo);
