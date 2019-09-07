@@ -7,18 +7,12 @@ import com.clarity.claritydispatcher.service.KafkaService;
 import com.clarity.claritydispatcher.service.ResponseFactory;
 import com.clarity.claritydispatcher.web.model.AccountRequestDTO;
 import com.clarity.clarityshared.Cmd;
-import com.clarity.clarityshared.Query;
-import io.reactivex.Single;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.jodah.failsafe.Failsafe;
-import net.jodah.failsafe.RetryPolicy;
 import reactor.core.publisher.Mono;
 
-import java.net.ConnectException;
-import java.time.Duration;
 import java.util.Map;
 
 @Slf4j
@@ -45,7 +39,7 @@ public class EthereumAccountCreate implements Cmd<Mono<Map<String, Object>>>, Re
                 String password = command.accountRequestDTO.getPassword();
                 final Map<String, String> walletInfo = command.getEthService().createAccount(password);
 
-                result = getSuccessResponse(walletInfo);
+                result = getSuccessMonoResponse(walletInfo);
             } catch (Exception ex) {
                 log.info(ex.getMessage());
             }

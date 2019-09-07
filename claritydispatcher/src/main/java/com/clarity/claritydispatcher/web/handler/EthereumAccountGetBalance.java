@@ -2,15 +2,11 @@ package com.clarity.claritydispatcher.web.handler;
 
 import an.awesome.pipelinr.Command;
 import com.clarity.claritydispatcher.service.EthereumService;
-import com.clarity.claritydispatcher.service.QueryPipeline;
 import com.clarity.claritydispatcher.service.ResponseFactory;
 import com.clarity.claritydispatcher.util.JSONAble;
 import com.clarity.claritydispatcher.web.model.AccountBalanceRequestDTO;
 import com.clarity.clarityshared.Query;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micronaut.context.annotation.Prototype;
-import io.micronaut.context.annotation.Requires;
-import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +16,6 @@ import org.jooq.lambda.Unchecked;
 import org.web3j.crypto.WalletFile;
 import reactor.core.publisher.Mono;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,8 +58,8 @@ public class EthereumAccountGetBalance implements Query<Mono<Map<String, Object>
                     balanceResult.put("balance", b);
                     return balanceResult;
                   })
-              .thenApply(this::getSuccessResponse)
-              .exceptionally(this::getJsonErrsResp);
+              .thenApply(this::getSuccessMonoResponse)
+              .exceptionally(this::getJsonErrMonoResp);
       return walletFile.join();
     }
   }

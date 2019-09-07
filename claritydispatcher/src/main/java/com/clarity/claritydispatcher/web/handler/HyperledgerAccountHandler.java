@@ -1,7 +1,7 @@
 package com.clarity.claritydispatcher.web.handler;
 
 import an.awesome.pipelinr.Command;
-import com.clarity.claritydispatcher.error.NoMessageReceived;
+import com.clarity.claritydispatcher.error.exceptions.NoMessageReceivedException;
 import com.clarity.claritydispatcher.service.KafkaMessageListener;
 import com.clarity.claritydispatcher.service.KafkaService;
 import com.clarity.claritydispatcher.service.ResponseFactory;
@@ -15,7 +15,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -34,20 +33,6 @@ public class HyperledgerAccountHandler implements Query<Mono<Map<String, Object>
 
     public static class Handler implements Command.Handler<HyperledgerAccountHandler, Mono<Map<String, Object>>>, ResponseFactory {
 
-        @SneakyThrows
-        private static Mono<Map<String, Object>> getResult(HyperledgerAccountHandler command) {
-
-            final CountDownLatch latch = new CountDownLatch(10);
-            while (!latch.await(30, TimeUnit.SECONDS)) {
-                if (command.kafkaMessageListener.messages.peek() == null) {
-                    latch.countDown();
-                } else {
-                    return command.getSuccessResponse(command.kafkaMessageListener.messages.peek());
-                }
-            }
-
-            throw new NoMessageReceived("No message received from Hyperledger");
-        }
 
         @Override
         public Mono<Map<String, Object>> handle(HyperledgerAccountHandler command) {
@@ -57,6 +42,21 @@ public class HyperledgerAccountHandler implements Query<Mono<Map<String, Object>
 
             return getResult(command);
 
+        }
+
+        @SneakyThrows
+        private static Mono<Map<String, Object>> getResult(HyperledgerAccountHandler command) {
+
+            final CountDownLatch latch = new CountDownLatch(30);
+            while (!latch.await(10, TimeUnit.SECONDS)) {
+                if (command.kafkaMessageListener.messages.peek() == null) {
+                    latch.countDown();
+                } else {
+                    return command.getSuccessMonoResponse(command.kafkaMessageListener.messages.poll());
+                }
+            }
+
+            throw new NoMessageReceivedException("No message received from Hyperledger");
         }
     }
 }

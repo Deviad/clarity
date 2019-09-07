@@ -41,7 +41,7 @@ public class EthereumTransactionCreate implements Query<Mono<Map<String, Object>
                 ObjectMapper objectMapper = new ObjectMapper();
                 WalletFile walletFile = objectMapper.readValue(new String(Base64.decode(walletBase64)), WalletFile.class);
 
-                result = getSuccessResponse(command.ethService.sendTransaction(password, walletFile, amount, command.transactionRequestDTO.getToAddress()));
+                result = getSuccessMonoResponse(command.ethService.sendTransaction(password, walletFile, amount, command.transactionRequestDTO.getToAddress()));
             } catch (Exception ex) {
                 log.info(ex.getMessage());
             }
