@@ -21,13 +21,9 @@ allprojects {
         mavenCentral()
         gradlePluginPortal()
         mavenLocal()
-        maven {
-            url = 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
-
-        maven {
-            url = 'http://repo.maven.apache.org/maven2'
-        }
+        maven { url "https://jcenter.bintray.com" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "http://repo.maven.apache.org/maven2" }
     }
     apply plugin: 'idea'
     idea {
@@ -49,6 +45,4 @@ allprojects {
 subprojects {
     version = "1.0"
 }
-
-
 

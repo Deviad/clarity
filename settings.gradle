@@ -7,9 +7,9 @@
  * in the user manual at https://docs.gradle.org/5.4.1/userguide/multi_project_builds.html
  */
 
-include 'clarity-shared',
-        'clarity-chaincode',
-        'clarity-config-server',
-        'clarity-eureka-server',
-        'clarity-dispatcher',
-        'clarity-hyperledger'
+include 'clarityshared',
+        'claritychaincode',
+        'clarityconfigserver',
+        'clarityeurekaserver',
+        'claritydispatcher',
+        'clarityhyperledger'

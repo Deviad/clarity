@@ -1,0 +1,92 @@
+/*
+ * SPDX-License-Identifier: Apache2
+ */
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.3'
+    id 'java'
+    id 'idea'
+    id 'maven'
+    id 'maven-publish'
+}
+
+version '0.0.1'
+
+setSourceCompatibility(JavaVersion.VERSION_11)
+setTargetCompatibility(JavaVersion.VERSION_11)
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url "https://nexus.hyperledger.org/content/repositories/snapshots/"
+    }
+
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    sourceSets {
+        "main" {
+            java.srcDir("src/main/java")
+            resources.srcDir("resources")
+            setBuildDir(file("target"))
+            output.dir(file("$buildDir/$name"))
+            java.outputDir = file("$buildDir/$name")
+        }
+        "test" {
+            java.srcDir("test/java")
+            resources.srcDir("test-resources")
+            setBuildDir(file("target"))
+            output.dir(file("$buildDir/$name"))
+            java.outputDir = file("$buildDir/$name")
+        }
+    }
+}
+
+idea {
+    module {
+        // use the same output folders as gradle, so the pythonDevelop task works correctly
+        buildDir = file("target")
+        outputDir = sourceSets["main"].output.classesDirs.singleFile
+        testOutputDir = sourceSets["test"].output.classesDirs.singleFile
+        inheritOutputDirs = false
+    }
+}
+
+dependencies {
+    compile group: 'org.hyperledger.fabric-chaincode-java', name: 'fabric-chaincode-shim', version: '1.4.2'
+    compile group: 'org.json', name: 'json', version: '20180813'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
+    testImplementation 'org.mockito:mockito-core:2.+'
+}
+
+shadowJar {
+    baseName = 'chaincode'
+    version = null
+    classifier = null
+
+    manifest {
+        attributes 'Main-Class': 'org.hyperledger.fabric.contract.ContractRouter'
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+
+tasks.withType(JavaCompile) {
+  options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-parameters"
+}
+
+group = 'com.clarity'
+version = '0.0.1-SNAPSHOT'
+archivesBaseName = 'claritychaincode'
