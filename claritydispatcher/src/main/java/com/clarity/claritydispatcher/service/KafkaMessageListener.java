@@ -18,13 +18,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 @Context
 @KafkaListener(groupId = "clarity-dispatcher-reply", offsetReset = OffsetReset.EARLIEST)
 public class KafkaMessageListener {
-    public Queue<String> messages = new ConcurrentLinkedDeque<>();
     public MyRxOutputBean<String> bus = new MyRxOutputBean<>();
 
     @Topic(value = Topics.CREATE_HYPERLEDGER_WALLET_REPLY)
     public void receive(@KafkaKey String username, Single<String> message) {
         log.info("Got New Request - {} by {}", username, message.blockingGet());
-        messages.offer(message.blockingGet());
-//        bus.setObject(message.blockingGet());
+        bus.setObject(message.blockingGet());
     }
 }
