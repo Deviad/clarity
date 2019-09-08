@@ -27,7 +27,7 @@ public class HyperledgerAccountController {
 
 
     @Post(value = "/function/create", processes = MediaType.APPLICATION_JSON)
-    public Observable<Map<String, Object>> createAccount(@Valid AccountRequestDTO accountRequestDTO) {
+    public Map<String, Object> createAccount(@Valid AccountRequestDTO accountRequestDTO) {
         return this.pipelinrService.getCommandPipeline().orElseThrow().send(new HyperledgerAccountHandler(accountRequestDTO, kafkaservice, kafkaListener));
     }
 

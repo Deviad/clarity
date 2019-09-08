@@ -17,6 +17,6 @@ public class WrongArgumentsExceptionHandler implements ExceptionHandler<IllegalA
     @Override
     @Requires(classes = {IllegalArgumentException.class, ExceptionHandler.class})
     public HttpResponse handle(HttpRequest request, IllegalArgumentException exception) {
-        return HttpResponse.serverError(getJsonErrScalarResp(exception.getStackTrace()));
+        return HttpResponse.serverError(getJsonErrScalarResp(exception));
     }
 }

@@ -28,10 +28,11 @@ public interface ResponseFactory {
     return result;
   }
 
-  default Map<String, Object> getJsonErrScalarResp(Object object) {
+  default Map<String, Object> getJsonErrScalarResp(Throwable throwable) {
     Map<String, Object> result = new LinkedHashMap<>();
     result.put("status", "error");
-    result.put("message", object);
+    result.put("message", throwable.getMessage());
+    result.put("stacktrace", throwable.getStackTrace());
     return result;
   }
 }

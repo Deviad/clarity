@@ -16,6 +16,6 @@ public class NoMessageReceivedExceptionHandler implements ExceptionHandler<NoMes
     @Override
     @Requires(classes = {NoMessageReceivedException.class, ExceptionHandler.class})
     public HttpResponse handle(HttpRequest request, NoMessageReceivedException exception) {
-        return HttpResponse.serverError(getJsonErrScalarResp(exception.getStackTrace()));
+        return HttpResponse.serverError(getJsonErrScalarResp(exception));
     }
 }
