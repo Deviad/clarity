@@ -1,6 +1,6 @@
 package com.clarity.claritydispatcher.error.exceptions;
 
-public class NoMessageReceivedException extends Throwable {
+public class NoMessageReceivedException extends Exception {
 
     public NoMessageReceivedException() {
         super();

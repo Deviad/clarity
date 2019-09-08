@@ -7,6 +7,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.runtime.http.scope.RequestScope;
+import io.reactivex.BackpressureStrategy;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.lambda.Unchecked;
@@ -55,7 +56,7 @@ public class EthereumAccountControllerSSE {
     return Flux.interval(Duration.ofMillis(500))
         .doOnNext(x -> cf.connect(json))
         .subscribeOn(Schedulers.single())
-        .flatMap(x -> cf.getOutputBus().getEvents().replay(1).autoConnect().map(Output::getText))
+        .flatMap(x -> cf.getOutputBus().getEvents().toFlowable(BackpressureStrategy.LATEST).map(Output::getText))
         .distinct()
         .doFinally(
             signalType ->

@@ -10,6 +10,7 @@ import com.clarity.claritydispatcher.web.model.AccountRequestDTO;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
+import io.reactivex.Observable;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -24,8 +25,9 @@ public class HyperledgerAccountController {
     private final KafkaService kafkaservice;
     private final KafkaMessageListener kafkaListener;
 
+
     @Post(value = "/function/create", processes = MediaType.APPLICATION_JSON)
-    public Mono<Map<String, Object>> createAccount(@Valid AccountRequestDTO accountRequestDTO) {
+    public Observable<Map<String, Object>> createAccount(@Valid AccountRequestDTO accountRequestDTO) {
         return this.pipelinrService.getCommandPipeline().orElseThrow().send(new HyperledgerAccountHandler(accountRequestDTO, kafkaservice, kafkaListener));
     }
 
