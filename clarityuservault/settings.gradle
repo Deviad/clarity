@@ -1,0 +1,2 @@
+rootProject.name="clarityuservault"
+project(':clarityshared').projectDir = new File('../clarityshared')

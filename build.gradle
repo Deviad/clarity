@@ -14,6 +14,13 @@ plugins {
     id 'maven-publish'
 }
 allprojects {
+    ext {
+        mapstructVersion = '1.3.0.Final'
+        micronautVersion = '1.2.2'
+        micronautKafka = '1.2.0'
+        micronautSecurityJwt = '1.2.0'
+        micronautTestJunit = '1.1.1'
+    }
     setSourceCompatibility(JavaVersion.VERSION_11)
     setTargetCompatibility(JavaVersion.VERSION_11)
     repositories {
@@ -25,11 +32,33 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven { url "http://repo.maven.apache.org/maven2" }
     }
-    apply plugin: 'idea'
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+        sourceSets {
+            "main" {
+                java.srcDir("src/main/java")
+                resources.srcDir("resources")
+                setBuildDir(file("target"))
+                output.dir(file("$buildDir/$name"))
+                java.outputDir = file("$buildDir/$name")
+            }
+            "test" {
+                java.srcDir("test/java")
+                resources.srcDir("test-resources")
+                setBuildDir(file("target"))
+                output.dir(file("$buildDir/$name"))
+                java.outputDir = file("$buildDir/$name")
+            }
+        }
+    }
     idea {
         module {
-            outputDir file('target/classes/main')
-            testOutputDir file('target/classes/test')
+            // use the same output folders as gradle, so the pythonDevelop task works correctly
+            buildDir = file("target")
+            outputDir = sourceSets["main"].output.classesDirs.singleFile
+            testOutputDir = sourceSets["test"].output.classesDirs.singleFile
+            inheritOutputDirs = false
         }
     }
 //    if(project.convention.findPlugin(JavaPluginConvention)) {
@@ -38,11 +67,12 @@ allprojects {
 //        sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
 //    }
     wrapper {
-        gradleVersion = '5.1.1'
+        gradleVersion = '5.6.2'
         distributionType = Wrapper.DistributionType.BIN
     }
 }
 subprojects {
-    version = "1.0"
+    group = 'com.clarity'
+    version = "0.0.1-SNAPSHOT"
 }
 

@@ -12,4 +12,5 @@ include 'clarityshared',
         'clarityconfigserver',
         'clarityeurekaserver',
         'claritydispatcher',
-        'clarityhyperledger'
+        'clarityhyperledger',
+        'clarityuservault'

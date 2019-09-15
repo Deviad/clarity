@@ -2,6 +2,7 @@ package com.clarity.clarityhyperledger.service;
 
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.runtime.http.scope.RequestScope;
 import lombok.SneakyThrows;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -18,29 +19,29 @@ import org.bouncycastle.operator.bc.BcECContentSignerBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.io.StringWriter;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.X509Certificate;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 
 @Factory
 public class BeanFactory {
     @Bean
     @Singleton
+    @Named("bouncyCastleProvider")
     public Provider securityProviderFactory() {
         return new BouncyCastleProvider();
     }
 
     @SneakyThrows
     @Bean
-    @Singleton
-    public Map<String, Object> pemKeyFactory() {
-        Security.addProvider(securityProviderFactory());
+    @RequestScope
+    public Enrollment pemKeyFactory(@Named("bouncyCastleProvider") Provider bouncyCastleProvider) {
+        Security.addProvider(bouncyCastleProvider);
         // GENERATE THE PUBLIC/PRIVATE RSA KEY PAIR
         KeyPairGenerator generator = KeyPairGenerator.getInstance("EC", "BC");
         generator.initialize(384);
@@ -77,10 +78,17 @@ public class BeanFactory {
         }
         String certificate = string.toString();
         PrivateKey pk = keyPair.getPrivate();
-        Map<String, Object> certPkPair = new LinkedHashMap<>();
-        certPkPair.put("certificate", certificate);
-        certPkPair.put("pk", pk);
-        return certPkPair;
+        return new Enrollment() {
 
+            @Override
+            public String getCertificate() {
+                return certificate;
+            }
+
+            @Override
+            public PrivateKey getPrivateKey() {
+                return pk;
+            }
+        };
     }
 }
