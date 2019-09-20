@@ -1,16 +1,16 @@
 jib {
     from {
-        image = "adoptopenjdk:11-jre-hotspot"
+        image = "adoptopenjdk:11-jre-openj9"
     }
     to {
-        image = "clarityauth:latest"
+        image = "localhost:5000/clarityauth"
     }
     container {
         entrypoint = ["sh", "-c", "chmod +x /entrypoint.sh && sync && /entrypoint.sh"]
         ports = ["5555"]
         environment = [
             SPRING_OUTPUT_ANSI_ENABLED: "ALWAYS",
-            JHIPSTER_SLEEP: "0"
+            JHIPSTER_SLEEP: "30"
         ]
         useCurrentTimestamp = true
     }

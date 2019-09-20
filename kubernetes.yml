@@ -1,0 +1,75 @@
+# PODS >> BEGIN
+apiVersion: v1
+kind: Pod
+metadata:
+  name: user-db
+  labels:
+    app: user-db
+spec:
+  volumes:
+    - name: user-db
+  containers:
+    - name: user-db
+      image: mongo:4.0.12
+      ports:
+        - name: mongodb-port
+          containerPort: 27017
+      volumeMounts:
+        - name: user-db
+          mountPath: /data/db
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: clarity-auth
+  labels:
+    app: clarity-auth
+spec:
+  containers:
+    - name: clarity-auth
+      image: localhost:5000/clarityauth
+      ports:
+        - name: oauth-port
+          containerPort: 5555
+      env:
+        - name: _JAVA_OPTIONS
+          value: "-Xmx512m -Xms256m"
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod,swagger"
+        - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
+          value: "true"
+        - name: SPRING_DATA_MONGODB_URI
+          value: "mongodb://mongo-user-service:27017" #Needs to connect to service hostname and port
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: "clarityauth"
+        - name: JHIPSTER_SLEEP
+          value: "30"
+---
+# SERVICES >> BEGIN
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-user-service
+spec:
+  ports:
+    - port: 27017
+      targetPort: mongodb-port
+      nodePort: 32000
+      protocol: TCP
+  selector:
+    app: user-db
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clarity-auth-service
+spec:
+  ports:
+    - port: 5555
+      targetPort: oauth-port
+      nodePort: 32001
+      protocol: TCP
+  selector:
+    app: clarity-auth
+  type: NodePort
