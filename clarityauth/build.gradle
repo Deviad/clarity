@@ -33,8 +33,6 @@ version = "0.0.1-SNAPSHOT"
 
 description = ""
 
-sourceCompatibility=1.8
-targetCompatibility=1.8
 assert System.properties["java.specification.version"] == "1.8" || "11" || "12"
 
 apply from: "gradle/docker.gradle"
@@ -231,8 +229,5 @@ task cleanResources(type: Delete) {
     delete "build/resources"
 }
 
-wrapper {
-    gradleVersion = "5.6.2"
-}
 compileJava.dependsOn processResources
 processResources.dependsOn bootBuildInfo

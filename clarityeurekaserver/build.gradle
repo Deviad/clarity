@@ -52,38 +52,6 @@ eclipse {
     }
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-    sourceSets {
-        "main" {
-            java.srcDir("src/main/java")
-            resources.srcDir("resources")
-            setBuildDir(file("target"))
-            output.dir(file("$buildDir/$name"))
-            java.outputDir = file("$buildDir/$name")
-        }
-        "test" {
-            java.srcDir("test/java")
-            resources.srcDir("test-resources")
-            setBuildDir(file("target"))
-            output.dir(file("$buildDir/$name"))
-            java.outputDir = file("$buildDir/$name")
-        }
-    }
-}
-
-idea {
-    module {
-        // use the same output folders as gradle, so the pythonDevelop task works correctly
-        buildDir = file("target")
-        outputDir = sourceSets["main"].output.classesDirs.singleFile
-        testOutputDir = sourceSets["test"].output.classesDirs.singleFile
-        inheritOutputDirs = false
-    }
-}
-
-
 group = 'com.clarity'
 version = '0.0.1-SNAPSHOT'
 description = 'Configuration Server'
