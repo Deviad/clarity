@@ -1,0 +1,35 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.clarity"
+    },
+    "jhipsterVersion": "6.3.0",
+    "applicationType": "uaa",
+    "baseName": "clarityauth",
+    "packageName": "com.clarity",
+    "packageFolder": "com/clarity",
+    "serverPort": "5555",
+    "authenticationType": "uaa",
+    "cacheProvider": "caffeine",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": true,
+    "embeddableLaunchScript": false,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true
+  }
+}
