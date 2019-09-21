@@ -5,21 +5,28 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * User Manual available at https://docs.gradle.org/5.4.1/userguide/tutorial_java_projects.html
  */
-
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.8.RELEASE'
+        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:1.6.1"
+        classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:2.1.0"
+        classpath "org.openapitools:openapi-generator-gradle-plugin:4.1.2"
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.21"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1"
+    }
+}
 plugins {
     // Apply the java plugin to add support for Java
     id 'java'
     id 'idea'
     id 'maven'
     id 'maven-publish'
-    id "org.springframework.boot" version("2.1.8.RELEASE") apply false
-    id "com.google.cloud.tools.jib" version("1.6.1") apply false
-    id "com.gorylenko.gradle-git-properties" version("2.1.0") apply false
-    id "org.openapi.generator" version("4.1.2") apply false
-    id "net.ltgt.apt-eclipse" version("0.21") apply false
-    id "net.ltgt.apt-idea" version("0.21") apply false
-    id "net.ltgt.apt" version("0.21") apply false
-    id "org.sonarqube" version("2.7.1") apply false
 }
 allprojects {
     ext {
@@ -32,13 +39,15 @@ allprojects {
     setSourceCompatibility(JavaVersion.VERSION_11)
     setTargetCompatibility(JavaVersion.VERSION_11)
     repositories {
-        jcenter()
-        mavenCentral()
-        gradlePluginPortal()
         mavenLocal()
+        mavenCentral()
+        jcenter()
+        gradlePluginPortal()
         maven { url "https://jcenter.bintray.com" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "http://oss.jfrog.org/artifactory/oss-snapshot-local"}
         maven { url "http://repo.maven.apache.org/maven2" }
+//        maven { url "https://plugins.gradle.org/m2/" }
     }
     java {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -67,6 +76,11 @@ allprojects {
             outputDir = sourceSets["main"].output.classesDirs.singleFile
             testOutputDir = sourceSets["test"].output.classesDirs.singleFile
             inheritOutputDirs = false
+            // if you hate browsing Javadoc
+            downloadJavadoc = true
+
+            // and love reading sources :)
+            downloadSources = true
         }
     }
 //    if(project.convention.findPlugin(JavaPluginConvention)) {

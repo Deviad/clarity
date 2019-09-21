@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: clarity-authentication
-cloud:
-  config:
-    uri: http://localhost:8888

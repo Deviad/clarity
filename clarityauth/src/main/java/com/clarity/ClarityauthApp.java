@@ -5,11 +5,13 @@ import com.clarity.config.DefaultProfileUtil;
 
 import io.github.jhipster.config.JHipsterConstants;
 
+import io.github.jhipster.config.apidoc.SwaggerAutoConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;

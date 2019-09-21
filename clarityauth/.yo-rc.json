@@ -20,7 +20,7 @@
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "gradle",
-    "enableSwaggerCodegen": true,
+    "enableSwaggerCodegen": false,
     "embeddableLaunchScript": false,
     "testFrameworks": [],
     "jhiPrefix": "jhi",
