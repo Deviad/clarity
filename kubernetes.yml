@@ -21,29 +21,82 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: clarity-auth
+  name: keycloak-db
   labels:
-    app: clarity-auth
+    app: keycloak-db
 spec:
   containers:
-    - name: clarity-auth
-      image: localhost:5000/clarityauth
+    - name: keycloak-db
+      image: postgres
       ports:
-        - name: oauth-port
-          containerPort: 5555
+        - name: kc-db-port
+          containerPort: 5432
+      volumeMounts:
+        - name: keycloak-db-volume
+          mountPath: /var/lib/postgresql/data
       env:
-        - name: _JAVA_OPTIONS
-          value: "-Xmx512m -Xms256m"
-        - name: SPRING_PROFILES_ACTIVE
-          value: "prod,swagger"
-        - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
-          value: "true"
-        - name: SPRING_DATA_MONGODB_URI
-          value: "mongodb://mongo-user-service:27017" #Needs to connect to service hostname and port
-        - name: SPRING_DATA_MONGODB_DATABASE
-          value: "clarityauth"
-        - name: JHIPSTER_SLEEP
-          value: "30"
+        - name: POSTGRES_DB
+          value: "keycloak"
+        - name: POSTGRES_USER
+          value: "keycloak"
+        - name: POSTGRES_PASSWORD
+          value: "password"
+        - name: POSTGRES_PORT
+          value: "5432"
+  volumes:
+    - name: keycloak-db-volume
+      emptyDir: {}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: keycloak-app
+  labels:
+    app: keycloak-app
+spec:
+  containers:
+    - image: jboss/keycloak
+      name: keycloak-app
+      ports:
+        - name: kc-port1
+          containerPort: 9080
+        - name: kc-port2
+          containerPort: 9443
+        - name: kc-port3
+          containerPort: 10990
+      env:
+        - name: DB_VENDOR
+          value: "POSTGRES"
+        - name: DB_ADDR
+          value: "kc-db-service"
+        - name: DB_DATABASE
+          value: "keycloak"
+        - name: DB_USER
+          value: "keycloak"
+        - name: DB_SCHEMA
+          value: "public"
+        - name: DB_PASSWORD
+          value: "password"
+        - name: KEYCLOAK_USER
+          value: "admin"
+        - name: KEYCLOAK_PASSWORD
+          value: "admin"
+      command: ["/bin/sh"]
+      args: ["-c",
+             "echo sleeping 30 secs: hopefully postgres will start;
+             sleep 0;
+             keycloak/bin/add-user-keycloak.sh -r master -u {{KEYCLOAK_ADMIN}} -p {{KEYCLOAK_PASSWORD}};
+             keycloak/bin/standalone.sh -b 0.0.0.0 -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/opt/jboss/keycloak/realm-config -Dkeycloak.migration.strategy=OVERWRITE_EXISTING -Djboss.socket.binding.port-offset=1000"]
+      volumeMounts:
+        - mountPath: /opt/jboss/keycloak/realm-config
+          name: keycloak-settings-volume
+  volumes:
+    - name: keycloak-settings-volume
+      hostPath:
+        # directory location on host
+        path: /Volumes/Data/Projects/clarity/keycloak-realm-config
+        # this field is optional
+        type: Directory
 ---
 # SERVICES >> BEGIN
 apiVersion: v1
@@ -63,13 +116,38 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: clarity-auth-service
+  name: kc-db-service
 spec:
   ports:
-    - port: 5555
-      targetPort: oauth-port
-      nodePort: 32001
+    - port: 5432
+      targetPort: kc-db-port
+      nodePort: 32004
       protocol: TCP
   selector:
-    app: clarity-auth
+    app: keycloak-db
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kc-service
+spec:
+  ports:
+    - port: 9080
+      name: "kc-port1"
+      targetPort: kc-port1
+      nodePort: 32001
+      protocol: TCP
+    - port: 9443
+      name: "kc-port2"
+      targetPort: kc-port2
+      nodePort: 32002
+      protocol: TCP
+    - port: 1090
+      name: "kc-port3"
+      targetPort: kc-port3
+      nodePort: 32003
+      protocol: TCP
+  selector:
+    app: keycloak-app
   type: NodePort

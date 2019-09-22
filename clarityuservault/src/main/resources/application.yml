@@ -20,6 +20,12 @@ micronaut:
         enabled: true
       oauth:
         enabled: true
+        clients:
+          keycloak:
+            client-secret: <<your client secret>>
+            client-id: <<your client id>>
+            openid:
+              issuer: https://accounts.google.com
     token:
       jwt:
         enabled: true
