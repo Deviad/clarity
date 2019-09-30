@@ -1,0 +1,22 @@
+kind: Module
+name: claritydispatcher
+description: Backend service container
+type: container
+services:
+  - name: clarity-dispatcher
+    dependencies:
+      - clarity-config-service
+      - clarity-eureka-service
+    ports:
+      - name: http
+        containerPort: 8887
+        # Maps service:80 -> container:8080
+        servicePort: 8887
+    healthCheck:
+      httpGet:
+        path: /health
+        port: http
+    ingresses:
+      - path: /dispatcher-health
+        port: http
+

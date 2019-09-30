@@ -1,0 +1,18 @@
+kind: Module
+name: clarityeureka
+description: Backend service container
+type: container
+services:
+  - name: clarity-eureka-service
+    ports:
+      - name: http
+        containerPort: 8767
+        # Maps service:80 -> container:8080
+        servicePort: 8767
+    healthCheck:
+      httpGet:
+        path: /actuator/health
+        port: http
+    ingresses:
+      - path: /eureka/health
+        port: http

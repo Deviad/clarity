@@ -1,0 +1,1596 @@
+
+[2019-09-30T16:19:27.475Z] Error: Unable to run docker command: Command failed with code 1: docker build -t clarityuservault:v-4e4d05709b /Volumes/Data/Projects/clarity/.garden/build/clarityuservault
+
+COPY failed: no source files were specified
+
+Here are the last 100 lines of the output:
+
+ Sending build context to Docker daemon  88.58kB
+Step 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
+ ---> f3f4b8ddca6f
+Step 2/4 : COPY target/libs/clarityuservault-*all.jar clarityuservault.jar
+
+    at Object.<anonymous> (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+    at Generator.throw (<anonymous>)
+    at rejected (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+Error Details:
+err:
+  detail:
+    cmd: docker
+    args:
+      - build
+      - '-t'
+      - 'clarityuservault:v-4e4d05709b'
+      - /Volumes/Data/Projects/clarity/.garden/build/clarityuservault
+    opts:
+      cwd: /Volumes/Data/Projects/clarity/.garden/build/clarityuservault
+      outputStream:
+        _readableState:
+          objectMode: true
+          highWaterMark: 16
+          buffer:
+            head: null
+            tail: null
+            length: 0
+          length: 0
+          pipes: null
+          pipesCount: 0
+          flowing: true
+          ended: true
+          endEmitted: true
+          reading: false
+          sync: false
+          needReadable: false
+          emittedReadable: false
+          readableListening: false
+          resumeScheduled: false
+          paused: false
+          emitClose: true
+          destroyed: false
+          defaultEncoding: utf8
+          awaitDrain: 0
+          readingMore: false
+          decoder: null
+          encoding: null
+        readable: false
+        _events: {}
+        _eventsCount: 3
+        _writableState:
+          objectMode: false
+          highWaterMark: 16384
+          finalCalled: false
+          needDrain: false
+          ending: true
+          ended: true
+          finished: true
+          destroyed: false
+          decodeStrings: true
+          defaultEncoding: utf8
+          length: 0
+          writing: false
+          corked: 0
+          sync: false
+          bufferProcessing: false
+          writecb: null
+          writelen: 0
+          bufferedRequest: null
+          lastBufferedRequest: null
+          pendingcb: 0
+          prefinished: true
+          errorEmitted: false
+          emitClose: true
+          bufferedRequestCount: 0
+          corkedRequestsFree:
+            next: null
+            entry: null
+        writable: false
+        allowHalfOpen: true
+        _transformState:
+          needTransform: false
+          transforming: false
+          writecb: null
+          writechunk: null
+          writeencoding: buffer
+        matcher: {}
+        overflow: false
+      timeout: 1200
+    result:
+      code: 1
+      output: "Sending build context to Docker daemon  88.58kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityuservault-*all.jar clarityuservault.jar\n"
+      stdout: "Sending build context to Docker daemon  88.58kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityuservault-*all.jar clarityuservault.jar\n"
+      stderr: |
+        COPY failed: no source files were specified
+      proc:
+        _events: {}
+        _eventsCount: 2
+        _closesNeeded: 3
+        _closesGot: 3
+        connected: false
+        signalCode: null
+        exitCode: 1
+        killed: false
+        spawnfile: docker
+        _handle: null
+        spawnargs:
+          - docker
+          - build
+          - '-t'
+          - 'clarityuservault:v-4e4d05709b'
+          - /Volumes/Data/Projects/clarity/.garden/build/clarityuservault
+        pid: 9113
+        stdin:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: null
+            ended: false
+            endEmitted: false
+            reading: false
+            sync: true
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: true
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 1
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdout:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stderr:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: true
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdio:
+          - ~err~detail~result~proc~stdin
+          - ~err~detail~result~proc~stdout
+          - ~err~detail~result~proc~stderr
+    code: 1
+    output: "Sending build context to Docker daemon  88.58kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityuservault-*all.jar clarityuservault.jar\n"
+    stdout: "Sending build context to Docker daemon  88.58kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityuservault-*all.jar clarityuservault.jar\n"
+    stderr: |
+      COPY failed: no source files were specified
+    proc: ~err~detail~result~proc
+  type: runtime
+args:
+  - build
+  - '-t'
+  - 'clarityuservault:v-4e4d05709b'
+  - /Volumes/Data/Projects/clarity/.garden/build/clarityuservault
+cwd: /Volumes/Data/Projects/clarity/.garden/build/clarityuservault
+
+
+[2019-09-30T16:19:27.566Z] Error: Unable to run docker command: Command failed with code 1: docker build -t clarityconfigserver:v-f10820d095 /Volumes/Data/Projects/clarity/.garden/build/clarityconfigserver
+
+COPY failed: no source files were specified
+
+Here are the last 100 lines of the output:
+
+ Sending build context to Docker daemon  83.97kB
+Step 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
+ ---> f3f4b8ddca6f
+Step 2/4 : COPY target/libs/clarityconfigserver-*.jar clarityconfigserver.jar
+
+    at Object.<anonymous> (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+    at Generator.throw (<anonymous>)
+    at rejected (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+Error Details:
+err:
+  detail:
+    cmd: docker
+    args:
+      - build
+      - '-t'
+      - 'clarityconfigserver:v-f10820d095'
+      - /Volumes/Data/Projects/clarity/.garden/build/clarityconfigserver
+    opts:
+      cwd: /Volumes/Data/Projects/clarity/.garden/build/clarityconfigserver
+      outputStream:
+        _readableState:
+          objectMode: true
+          highWaterMark: 16
+          buffer:
+            head: null
+            tail: null
+            length: 0
+          length: 0
+          pipes: null
+          pipesCount: 0
+          flowing: true
+          ended: true
+          endEmitted: true
+          reading: false
+          sync: false
+          needReadable: false
+          emittedReadable: false
+          readableListening: false
+          resumeScheduled: false
+          paused: false
+          emitClose: true
+          destroyed: false
+          defaultEncoding: utf8
+          awaitDrain: 0
+          readingMore: false
+          decoder: null
+          encoding: null
+        readable: false
+        _events: {}
+        _eventsCount: 3
+        _writableState:
+          objectMode: false
+          highWaterMark: 16384
+          finalCalled: false
+          needDrain: false
+          ending: true
+          ended: true
+          finished: true
+          destroyed: false
+          decodeStrings: true
+          defaultEncoding: utf8
+          length: 0
+          writing: false
+          corked: 0
+          sync: false
+          bufferProcessing: false
+          writecb: null
+          writelen: 0
+          bufferedRequest: null
+          lastBufferedRequest: null
+          pendingcb: 0
+          prefinished: true
+          errorEmitted: false
+          emitClose: true
+          bufferedRequestCount: 0
+          corkedRequestsFree:
+            next: null
+            entry: null
+        writable: false
+        allowHalfOpen: true
+        _transformState:
+          needTransform: false
+          transforming: false
+          writecb: null
+          writechunk: null
+          writeencoding: buffer
+        matcher: {}
+        overflow: false
+      timeout: 1200
+    result:
+      code: 1
+      output: "Sending build context to Docker daemon  83.97kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityconfigserver-*.jar clarityconfigserver.jar\n"
+      stdout: "Sending build context to Docker daemon  83.97kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityconfigserver-*.jar clarityconfigserver.jar\n"
+      stderr: |
+        COPY failed: no source files were specified
+      proc:
+        _events: {}
+        _eventsCount: 2
+        _closesNeeded: 3
+        _closesGot: 3
+        connected: false
+        signalCode: null
+        exitCode: 1
+        killed: false
+        spawnfile: docker
+        _handle: null
+        spawnargs:
+          - docker
+          - build
+          - '-t'
+          - 'clarityconfigserver:v-f10820d095'
+          - /Volumes/Data/Projects/clarity/.garden/build/clarityconfigserver
+        pid: 9114
+        stdin:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: null
+            ended: false
+            endEmitted: false
+            reading: false
+            sync: true
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: true
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 1
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdout:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stderr:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: true
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdio:
+          - ~err~detail~result~proc~stdin
+          - ~err~detail~result~proc~stdout
+          - ~err~detail~result~proc~stderr
+    code: 1
+    output: "Sending build context to Docker daemon  83.97kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityconfigserver-*.jar clarityconfigserver.jar\n"
+    stdout: "Sending build context to Docker daemon  83.97kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/clarityconfigserver-*.jar clarityconfigserver.jar\n"
+    stderr: |
+      COPY failed: no source files were specified
+    proc: ~err~detail~result~proc
+  type: runtime
+args:
+  - build
+  - '-t'
+  - 'clarityconfigserver:v-f10820d095'
+  - /Volumes/Data/Projects/clarity/.garden/build/clarityconfigserver
+cwd: /Volumes/Data/Projects/clarity/.garden/build/clarityconfigserver
+
+
+[2019-09-30T16:19:28.574Z] Error: Unable to run docker command: Command failed with code 1: docker build -t claritydispatcher:v-3961dea780 /Volumes/Data/Projects/clarity/.garden/build/claritydispatcher
+
+COPY failed: no source files were specified
+
+Here are the last 100 lines of the output:
+
+ Sending build context to Docker daemon  162.3kB
+Step 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
+ ---> f3f4b8ddca6f
+Step 2/4 : COPY target/libs/claritydispatcher*.jar /claritydispatcher.jar
+
+    at Object.<anonymous> (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+    at Generator.throw (<anonymous>)
+    at rejected (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+Error Details:
+err:
+  detail:
+    cmd: docker
+    args:
+      - build
+      - '-t'
+      - 'claritydispatcher:v-3961dea780'
+      - /Volumes/Data/Projects/clarity/.garden/build/claritydispatcher
+    opts:
+      cwd: /Volumes/Data/Projects/clarity/.garden/build/claritydispatcher
+      outputStream:
+        _readableState:
+          objectMode: true
+          highWaterMark: 16
+          buffer:
+            head: null
+            tail: null
+            length: 0
+          length: 0
+          pipes: null
+          pipesCount: 0
+          flowing: true
+          ended: true
+          endEmitted: true
+          reading: false
+          sync: false
+          needReadable: false
+          emittedReadable: false
+          readableListening: false
+          resumeScheduled: false
+          paused: false
+          emitClose: true
+          destroyed: false
+          defaultEncoding: utf8
+          awaitDrain: 0
+          readingMore: false
+          decoder: null
+          encoding: null
+        readable: false
+        _events: {}
+        _eventsCount: 3
+        _writableState:
+          objectMode: false
+          highWaterMark: 16384
+          finalCalled: false
+          needDrain: false
+          ending: true
+          ended: true
+          finished: true
+          destroyed: false
+          decodeStrings: true
+          defaultEncoding: utf8
+          length: 0
+          writing: false
+          corked: 0
+          sync: false
+          bufferProcessing: false
+          writecb: null
+          writelen: 0
+          bufferedRequest: null
+          lastBufferedRequest: null
+          pendingcb: 0
+          prefinished: true
+          errorEmitted: false
+          emitClose: true
+          bufferedRequestCount: 0
+          corkedRequestsFree:
+            next: null
+            entry: null
+        writable: false
+        allowHalfOpen: true
+        _transformState:
+          needTransform: false
+          transforming: false
+          writecb: null
+          writechunk: null
+          writeencoding: buffer
+        matcher: {}
+        overflow: false
+      timeout: 1200
+    result:
+      code: 1
+      output: "Sending build context to Docker daemon  162.3kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/claritydispatcher*.jar /claritydispatcher.jar\n"
+      stdout: "Sending build context to Docker daemon  162.3kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/claritydispatcher*.jar /claritydispatcher.jar\n"
+      stderr: |
+        COPY failed: no source files were specified
+      proc:
+        _events: {}
+        _eventsCount: 2
+        _closesNeeded: 3
+        _closesGot: 3
+        connected: false
+        signalCode: null
+        exitCode: 1
+        killed: false
+        spawnfile: docker
+        _handle: null
+        spawnargs:
+          - docker
+          - build
+          - '-t'
+          - 'claritydispatcher:v-3961dea780'
+          - /Volumes/Data/Projects/clarity/.garden/build/claritydispatcher
+        pid: 9144
+        stdin:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: null
+            ended: false
+            endEmitted: false
+            reading: false
+            sync: true
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: true
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 1
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdout:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stderr:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: true
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdio:
+          - ~err~detail~result~proc~stdin
+          - ~err~detail~result~proc~stdout
+          - ~err~detail~result~proc~stderr
+    code: 1
+    output: "Sending build context to Docker daemon  162.3kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/claritydispatcher*.jar /claritydispatcher.jar\n"
+    stdout: "Sending build context to Docker daemon  162.3kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY target/libs/claritydispatcher*.jar /claritydispatcher.jar\n"
+    stderr: |
+      COPY failed: no source files were specified
+    proc: ~err~detail~result~proc
+  type: runtime
+args:
+  - build
+  - '-t'
+  - 'claritydispatcher:v-3961dea780'
+  - /Volumes/Data/Projects/clarity/.garden/build/claritydispatcher
+cwd: /Volumes/Data/Projects/clarity/.garden/build/claritydispatcher
+
+
+[2019-09-30T16:19:28.718Z] Error: Unable to run docker command: Command failed with code 1: docker build -t clarityeureka:v-f7df0b1c24 /Volumes/Data/Projects/clarity/.garden/build/clarityeureka
+
+COPY failed: no source files were specified
+
+Here are the last 100 lines of the output:
+
+ Sending build context to Docker daemon  82.43kB
+Step 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
+ ---> f3f4b8ddca6f
+Step 2/4 : COPY ./target/libs/clarityeurekaserver-*.jar clarityeurekaserver.jar
+
+    at Object.<anonymous> (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+    at Generator.throw (<anonymous>)
+    at rejected (/snapshot/dist/build/src/plugins/container/helpers.js:0)
+Error Details:
+err:
+  detail:
+    cmd: docker
+    args:
+      - build
+      - '-t'
+      - 'clarityeureka:v-f7df0b1c24'
+      - /Volumes/Data/Projects/clarity/.garden/build/clarityeureka
+    opts:
+      cwd: /Volumes/Data/Projects/clarity/.garden/build/clarityeureka
+      outputStream:
+        _readableState:
+          objectMode: true
+          highWaterMark: 16
+          buffer:
+            head: null
+            tail: null
+            length: 0
+          length: 0
+          pipes: null
+          pipesCount: 0
+          flowing: true
+          ended: true
+          endEmitted: true
+          reading: false
+          sync: false
+          needReadable: false
+          emittedReadable: false
+          readableListening: false
+          resumeScheduled: false
+          paused: false
+          emitClose: true
+          destroyed: false
+          defaultEncoding: utf8
+          awaitDrain: 0
+          readingMore: false
+          decoder: null
+          encoding: null
+        readable: false
+        _events: {}
+        _eventsCount: 3
+        _writableState:
+          objectMode: false
+          highWaterMark: 16384
+          finalCalled: false
+          needDrain: false
+          ending: true
+          ended: true
+          finished: true
+          destroyed: false
+          decodeStrings: true
+          defaultEncoding: utf8
+          length: 0
+          writing: false
+          corked: 0
+          sync: false
+          bufferProcessing: false
+          writecb: null
+          writelen: 0
+          bufferedRequest: null
+          lastBufferedRequest: null
+          pendingcb: 0
+          prefinished: true
+          errorEmitted: false
+          emitClose: true
+          bufferedRequestCount: 0
+          corkedRequestsFree:
+            next: null
+            entry: null
+        writable: false
+        allowHalfOpen: true
+        _transformState:
+          needTransform: false
+          transforming: false
+          writecb: null
+          writechunk: null
+          writeencoding: buffer
+        matcher: {}
+        overflow: false
+      timeout: 1200
+    result:
+      code: 1
+      output: "Sending build context to Docker daemon  82.43kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY ./target/libs/clarityeurekaserver-*.jar clarityeurekaserver.jar\n"
+      stdout: "Sending build context to Docker daemon  82.43kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY ./target/libs/clarityeurekaserver-*.jar clarityeurekaserver.jar\n"
+      stderr: |
+        COPY failed: no source files were specified
+      proc:
+        _events: {}
+        _eventsCount: 2
+        _closesNeeded: 3
+        _closesGot: 3
+        connected: false
+        signalCode: null
+        exitCode: 1
+        killed: false
+        spawnfile: docker
+        _handle: null
+        spawnargs:
+          - docker
+          - build
+          - '-t'
+          - 'clarityeureka:v-f7df0b1c24'
+          - /Volumes/Data/Projects/clarity/.garden/build/clarityeureka
+        pid: 9146
+        stdin:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: null
+            ended: false
+            endEmitted: false
+            reading: false
+            sync: true
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: true
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 1
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdout:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: false
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stderr:
+          connecting: false
+          _hadError: false
+          _handle: null
+          _parent: null
+          _host: null
+          _readableState:
+            objectMode: false
+            highWaterMark: 16384
+            buffer:
+              head: null
+              tail: null
+              length: 0
+            length: 0
+            pipes: null
+            pipesCount: 0
+            flowing: false
+            ended: true
+            endEmitted: true
+            reading: false
+            sync: false
+            needReadable: false
+            emittedReadable: true
+            readableListening: false
+            resumeScheduled: false
+            paused: false
+            emitClose: false
+            destroyed: true
+            defaultEncoding: utf8
+            awaitDrain: 0
+            readingMore: false
+            decoder: null
+            encoding: null
+          readable: false
+          _events: {}
+          _eventsCount: 3
+          _writableState:
+            objectMode: false
+            highWaterMark: 16384
+            finalCalled: false
+            needDrain: false
+            ending: false
+            ended: false
+            finished: false
+            destroyed: true
+            decodeStrings: false
+            defaultEncoding: utf8
+            length: 0
+            writing: false
+            corked: 0
+            sync: true
+            bufferProcessing: false
+            writecb: null
+            writelen: 0
+            bufferedRequest: null
+            lastBufferedRequest: null
+            pendingcb: 0
+            prefinished: false
+            errorEmitted: false
+            emitClose: false
+            bufferedRequestCount: 0
+            corkedRequestsFree:
+              next: null
+              entry: null
+          writable: false
+          allowHalfOpen: false
+          _sockname: null
+          _pendingData: null
+          _pendingEncoding: ''
+          server: null
+          _server: null
+        stdio:
+          - ~err~detail~result~proc~stdin
+          - ~err~detail~result~proc~stdout
+          - ~err~detail~result~proc~stderr
+    code: 1
+    output: "Sending build context to Docker daemon  82.43kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY ./target/libs/clarityeurekaserver-*.jar clarityeurekaserver.jar\n"
+    stdout: "Sending build context to Docker daemon  82.43kB\r\r\nStep 1/4 : FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim\n ---> f3f4b8ddca6f\nStep 2/4 : COPY ./target/libs/clarityeurekaserver-*.jar clarityeurekaserver.jar\n"
+    stderr: |
+      COPY failed: no source files were specified
+    proc: ~err~detail~result~proc
+  type: runtime
+args:
+  - build
+  - '-t'
+  - 'clarityeureka:v-f7df0b1c24'
+  - /Volumes/Data/Projects/clarity/.garden/build/clarityeureka
+cwd: /Volumes/Data/Projects/clarity/.garden/build/clarityeureka
+
+
+[2019-09-30T16:19:32.975Z] Error: Error deploying kafka-service: ProgressDeadlineExceeded - ReplicaSet "kafka-service-6fdd7d65fc" has timed out progressing.
+
+━━━ Events ━━━
+Deployment kafka-service: ScalingReplicaSet - Scaled up replica set kafka-service-6fdd7d65fc to 1
+Pod kafka-service-6fdd7d65fc-t2sj2: Scheduled - Successfully assigned clarity/kafka-service-6fdd7d65fc-t2sj2 to docker-desktop
+Pod kafka-service-6fdd7d65fc-t2sj2: Pulled - Container image "kafka:v-36adb2a095" already present on machine
+Pod kafka-service-6fdd7d65fc-t2sj2: Created - Created container kafka-service
+Pod kafka-service-6fdd7d65fc-t2sj2: Started - Started container kafka-service
+Pod kafka-service-6fdd7d65fc-t2sj2: Unhealthy - Readiness probe failed: dial tcp 10.1.0.11:9092: connect: connection refused
+Pod kafka-service-6fdd7d65fc-t2sj2: BackOff - Back-off restarting failed container
+Pod kafka-service-6fdd7d65fc-t2sj2: SandboxChanged - Pod sandbox changed, it will be killed and re-created.
+Pod kafka-service-6fdd7d65fc-t2sj2: Pulled - Container image "kafka:v-36adb2a095" already present on machine
+Pod kafka-service-6fdd7d65fc-t2sj2: Created - Created container kafka-service
+Pod kafka-service-6fdd7d65fc-t2sj2: Started - Started container kafka-service
+Pod kafka-service-6fdd7d65fc-t2sj2: Unhealthy - Readiness probe failed: dial tcp 10.1.0.14:9092: connect: connection refused
+Pod kafka-service-6fdd7d65fc-t2sj2: BackOff - Back-off restarting failed container
+
+━━━ Pod logs ━━━
+<Showing last 20 lines per pod in this Deployment. Run the following command for complete logs>
+$ kubectl -n clarity --context=docker-desktop logs deployment/kafka-service
+
+****** kafka-service-6fdd7d65fc-t2sj2 ******
+[2019-09-30 16:14:56,821] INFO [ZooKeeperClient Kafka server] Closed. (kafka.zookeeper.ZooKeeperClient)
+[2019-09-30 16:14:56,824] ERROR Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)
+kafka.zookeeper.ZooKeeperClientTimeoutException: Timed out waiting for connection while in state: CONNECTING
+	at kafka.zookeeper.ZooKeeperClient$$anonfun$kafka$zookeeper$ZooKeeperClient$$waitUntilConnected$1.apply$mcV$sp(ZooKeeperClient.scala:258)
+	at kafka.zookeeper.ZooKeeperClient$$anonfun$kafka$zookeeper$ZooKeeperClient$$waitUntilConnected$1.apply(ZooKeeperClient.scala:254)
+	at kafka.zookeeper.ZooKeeperClient$$anonfun$kafka$zookeeper$ZooKeeperClient$$waitUntilConnected$1.apply(ZooKeeperClient.scala:254)
+	at kafka.utils.CoreUtils$.inLock(CoreUtils.scala:253)
+	at kafka.zookeeper.ZooKeeperClient.kafka$zookeeper$ZooKeeperClient$$waitUntilConnected(ZooKeeperClient.scala:254)
+	at kafka.zookeeper.ZooKeeperClient.<init>(ZooKeeperClient.scala:112)
+	at kafka.zk.KafkaZkClient$.apply(KafkaZkClient.scala:1825)
+	at kafka.server.KafkaServer.kafka$server$KafkaServer$$createZkClient$1(KafkaServer.scala:363)
+	at kafka.server.KafkaServer.initZkClient(KafkaServer.scala:387)
+	at kafka.server.KafkaServer.startup(KafkaServer.scala:207)
+	at kafka.server.KafkaServerStartable.startup(KafkaServerStartable.scala:38)
+	at kafka.Kafka$.main(Kafka.scala:84)
+	at kafka.Kafka.main(Kafka.scala)
+[2019-09-30 16:14:56,825] INFO shutting down (kafka.server.KafkaServer)
+[2019-09-30 16:14:56,828] INFO shut down completed (kafka.server.KafkaServer)
+[2019-09-30 16:14:56,829] ERROR Exiting Kafka. (kafka.server.KafkaServerStartable)
+[2019-09-30 16:14:56,831] INFO shutting down (kafka.server.KafkaServer)
+
+    at Object.<anonymous> (/snapshot/dist/build/src/plugins/kubernetes/status/status.js:0)
+    at Generator.next (<anonymous>)
+    at fulfilled (/snapshot/dist/build/src/plugins/kubernetes/status/status.js:0)
+Error Details:
+serviceName: kafka-service
+status:
+  state: unhealthy
+  lastMessage: >-
+    ProgressDeadlineExceeded - ReplicaSet "kafka-service-6fdd7d65fc" has timed
+    out progressing.
+  logs: "\e[37m━━━ Events ━━━\e[39m\n\e[94mDeployment kafka-service:\e[39m \e[37mScalingReplicaSet - Scaled up replica set kafka-service-6fdd7d65fc to 1\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mScheduled - Successfully assigned clarity/kafka-service-6fdd7d65fc-t2sj2 to docker-desktop\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mPulled - Container image \"kafka:v-36adb2a095\" already present on machine\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mCreated - Created container kafka-service\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mStarted - Started container kafka-service\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[33mUnhealthy - Readiness probe failed: dial tcp 10.1.0.11:9092: connect: connection refused\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[33mBackOff - Back-off restarting failed container\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mSandboxChanged - Pod sandbox changed, it will be killed and re-created.\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mPulled - Container image \"kafka:v-36adb2a095\" already present on machine\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mCreated - Created container kafka-service\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[37mStarted - Started container kafka-service\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[33mUnhealthy - Readiness probe failed: dial tcp 10.1.0.14:9092: connect: connection refused\e[39m\n\e[94mPod kafka-service-6fdd7d65fc-t2sj2:\e[39m \e[33mBackOff - Back-off restarting failed container\e[39m\e[37m\e[39m\n\e[37m\e[39m\n\e[37m━━━ Pod logs ━━━\e[39m\n\e[37m\e[39m\e[90m<Showing last 20 lines per pod in this Deployment. Run the following command for complete logs>\e[39m\n\e[90m$ kubectl -n clarity --context=docker-desktop logs deployment/kafka-service\e[39m\n\e[94m\e[39m\n\e[94m****** kafka-service-6fdd7d65fc-t2sj2 ******\e[39m\n\e[94m\e[39m[2019-09-30 16:14:56,821] INFO [ZooKeeperClient Kafka server] Closed. (kafka.zookeeper.ZooKeeperClient)\n[2019-09-30 16:14:56,824] ERROR Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)\nkafka.zookeeper.ZooKeeperClientTimeoutException: Timed out waiting for connection while in state: CONNECTING\n\tat kafka.zookeeper.ZooKeeperClient$$anonfun$kafka$zookeeper$ZooKeeperClient$$waitUntilConnected$1.apply$mcV$sp(ZooKeeperClient.scala:258)\n\tat kafka.zookeeper.ZooKeeperClient$$anonfun$kafka$zookeeper$ZooKeeperClient$$waitUntilConnected$1.apply(ZooKeeperClient.scala:254)\n\tat kafka.zookeeper.ZooKeeperClient$$anonfun$kafka$zookeeper$ZooKeeperClient$$waitUntilConnected$1.apply(ZooKeeperClient.scala:254)\n\tat kafka.utils.CoreUtils$.inLock(CoreUtils.scala:253)\n\tat kafka.zookeeper.ZooKeeperClient.kafka$zookeeper$ZooKeeperClient$$waitUntilConnected(ZooKeeperClient.scala:254)\n\tat kafka.zookeeper.ZooKeeperClient.<init>(ZooKeeperClient.scala:112)\n\tat kafka.zk.KafkaZkClient$.apply(KafkaZkClient.scala:1825)\n\tat kafka.server.KafkaServer.kafka$server$KafkaServer$$createZkClient$1(KafkaServer.scala:363)\n\tat kafka.server.KafkaServer.initZkClient(KafkaServer.scala:387)\n\tat kafka.server.KafkaServer.startup(KafkaServer.scala:207)\n\tat kafka.server.KafkaServerStartable.startup(KafkaServerStartable.scala:38)\n\tat kafka.Kafka$.main(Kafka.scala:84)\n\tat kafka.Kafka.main(Kafka.scala)\n[2019-09-30 16:14:56,825] INFO shutting down (kafka.server.KafkaServer)\n[2019-09-30 16:14:56,828] INFO shut down completed (kafka.server.KafkaServer)\n[2019-09-30 16:14:56,829] ERROR Exiting Kafka. (kafka.server.KafkaServerStartable)\n[2019-09-30 16:14:56,831] INFO shutting down (kafka.server.KafkaServer)\n"
+  resource:
+    kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: kafka-service
+      namespace: clarity
+      selfLink: /apis/apps/v1/namespaces/clarity/deployments/kafka-service
+      uid: 3c0a07c2-e360-11e9-a2d2-025000000001
+      resourceVersion: '19412'
+      generation: 1
+      creationTimestamp: '2019-09-30T08:56:47Z'
+      labels:
+        module: kafka
+        service: kafka-service
+      annotations:
+        deployment.kubernetes.io/revision: '1'
+        garden.io/configured.replicas: '1'
+        garden.io/generated: 'true'
+        garden.io/version: v-36adb2a095
+        kubectl.kubernetes.io/last-applied-configuration: >
+          {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"garden.io/configured.replicas":"1","garden.io/generated":"true","garden.io/version":"v-36adb2a095"},"labels":{"module":"kafka","service":"kafka-service"},"name":"kafka-service","namespace":"clarity"},"spec":{"replicas":1,"revisionHistoryLimit":3,"selector":{"matchLabels":{"service":"kafka-service"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"module":"kafka","service":"kafka-service"}},"spec":{"containers":[{"env":[{"name":"GARDEN_VERSION","value":"v-36adb2a095"},{"name":"GARDEN_MODULE_KAFKA__OUTPUT_LOCAL_IMAGE_NAME","value":"kafka"},{"name":"GARDEN_MODULE_KAFKA__OUTPUT_DEPLOYMENT_IMAGE_NAME","value":"kafka"},{"name":"GARDEN_MODULE_ZOOKEPER__OUTPUT_LOCAL_IMAGE_NAME","value":"zookeper"},{"name":"GARDEN_MODULE_ZOOKEPER__OUTPUT_DEPLOYMENT_IMAGE_NAME","value":"zookeper"},{"name":"GARDEN_DEPENDENCIES","value":"[{\"moduleName\":\"kafka\",\"name\":\"kafka\",\"outputs\":{\"local-image-name\":\"kafka\",\"deployment-image-name\":\"kafka\"},\"type\":\"build\",\"version\":\"v-36adb2a095\"},{\"moduleName\":\"zookeper\",\"name\":\"zookeper-service\",\"outputs\":{},\"type\":\"service\",\"version\":\"v-e6a28186e0\"}]"},{"name":"ALLOW_PLAINTEXT_LISTENER","value":"yes"},{"name":"KAFKA_CFG_ZOOKEEPER_CONNECT","value":"zookeeper:2181"},{"name":"KAFKA_ADVERTISED_LISTENERS","value":"PLAINTEXT://kafka-service:9092"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}},{"name":"POD_IP","valueFrom":{"fieldRef":{"fieldPath":"status.podIP"}}},{"name":"POD_SERVICE_ACCOUNT","valueFrom":{"fieldRef":{"fieldPath":"spec.serviceAccountName"}}}],"image":"kafka:v-36adb2a095","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"initialDelaySeconds":90,"periodSeconds":5,"successThreshold":1,"tcpSocket":{"port":9092},"timeoutSeconds":3},"name":"kafka-service","ports":[{"containerPort":9092,"name":"kafkaport","protocol":"TCP"}],"readinessProbe":{"failureThreshold":90,"initialDelaySeconds":2,"periodSeconds":1,"successThreshold":2,"tcpSocket":{"port":9092},"timeoutSeconds":3},"resources":{"limits":{"cpu":"1","memory":"1Gi"},"requests":{"cpu":"10m","memory":"64Mi"}}}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","terminationGracePeriodSeconds":5}}}}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          service: kafka-service
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            module: kafka
+            service: kafka-service
+        spec:
+          containers:
+            - name: kafka-service
+              image: 'kafka:v-36adb2a095'
+              ports:
+                - name: kafkaport
+                  containerPort: 9092
+                  protocol: TCP
+              env:
+                - name: GARDEN_VERSION
+                  value: v-36adb2a095
+                - name: GARDEN_MODULE_KAFKA__OUTPUT_LOCAL_IMAGE_NAME
+                  value: kafka
+                - name: GARDEN_MODULE_KAFKA__OUTPUT_DEPLOYMENT_IMAGE_NAME
+                  value: kafka
+                - name: GARDEN_MODULE_ZOOKEPER__OUTPUT_LOCAL_IMAGE_NAME
+                  value: zookeper
+                - name: GARDEN_MODULE_ZOOKEPER__OUTPUT_DEPLOYMENT_IMAGE_NAME
+                  value: zookeper
+                - name: GARDEN_DEPENDENCIES
+                  value: >-
+                    [{"moduleName":"kafka","name":"kafka","outputs":{"local-image-name":"kafka","deployment-image-name":"kafka"},"type":"build","version":"v-36adb2a095"},{"moduleName":"zookeper","name":"zookeper-service","outputs":{},"type":"service","version":"v-e6a28186e0"}]
+                - name: ALLOW_PLAINTEXT_LISTENER
+                  value: 'yes'
+                - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+                  value: 'zookeeper:2181'
+                - name: KAFKA_ADVERTISED_LISTENERS
+                  value: 'PLAINTEXT://kafka-service:9092'
+                - name: POD_NAME
+                  valueFrom:
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: metadata.name
+                - name: POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: metadata.namespace
+                - name: POD_IP
+                  valueFrom:
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: status.podIP
+                - name: POD_SERVICE_ACCOUNT
+                  valueFrom:
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: spec.serviceAccountName
+              resources:
+                limits:
+                  cpu: '1'
+                  memory: 1Gi
+                requests:
+                  cpu: 10m
+                  memory: 64Mi
+              livenessProbe:
+                tcpSocket:
+                  port: 9092
+                initialDelaySeconds: 90
+                timeoutSeconds: 3
+                periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
+              readinessProbe:
+                tcpSocket:
+                  port: 9092
+                initialDelaySeconds: 2
+                timeoutSeconds: 3
+                periodSeconds: 1
+                successThreshold: 2
+                failureThreshold: 90
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: IfNotPresent
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 5
+          dnsPolicy: ClusterFirst
+          securityContext: {}
+          schedulerName: default-scheduler
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
+          maxSurge: 1
+      revisionHistoryLimit: 3
+      progressDeadlineSeconds: 600
+    status:
+      observedGeneration: 1
+      replicas: 1
+      updatedReplicas: 1
+      unavailableReplicas: 1
+      conditions:
+        - type: Available
+          status: 'True'
+          lastUpdateTime: '2019-09-30T08:56:47Z'
+          lastTransitionTime: '2019-09-30T08:56:47Z'
+          reason: MinimumReplicasAvailable
+          message: Deployment has minimum availability.
+        - type: Progressing
+          status: 'False'
+          lastUpdateTime: '2019-09-30T09:09:57Z'
+          lastTransitionTime: '2019-09-30T09:09:57Z'
+          reason: ProgressDeadlineExceeded
+          message: ReplicaSet "kafka-service-6fdd7d65fc" has timed out progressing.
+

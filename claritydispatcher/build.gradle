@@ -7,8 +7,10 @@ plugins {
     id 'application'
     id 'maven'
     id 'maven-publish'
-
+    id "com.google.cloud.tools.jib"
 }
+apply from: "gradle/docker.gradle"
+
 description = "claritydispatcher"
 mainClassName = "com.clarity.claritydispatcher.Application"
 archivesBaseName = "claritydispatcher"

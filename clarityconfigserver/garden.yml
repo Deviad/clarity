@@ -1,0 +1,21 @@
+kind: Module
+description: Spring Boot devtools-sample module
+type: container
+name: clarityconfigserver
+#hotReload:
+#  sync:
+#    - target: /app/target
+#      source: target
+services:
+  - name: clarity-config-service
+    ports:
+      - name: http
+        containerPort: 8888
+        servicePort: 8888
+    healthCheck:
+      httpGet:
+        path: /actuator/health
+        port: http
+    ingresses:
+      - path: /clarity-config/health
+        port: http

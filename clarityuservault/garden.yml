@@ -1,0 +1,18 @@
+kind: Module
+name: clarityuservault
+description: Backend service container
+type: container
+services:
+  - name: clarity-user-vault
+    ports:
+      - name: http
+        containerPort: 8884
+        # Maps service:80 -> container:8080
+        servicePort: 8884
+    healthCheck:
+      httpGet:
+        path: /health
+        port: http
+    ingresses:
+      - path: /user-vault/health
+        port: http

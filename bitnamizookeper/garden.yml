@@ -1,0 +1,18 @@
+kind: Module
+name: zookeper
+description: Zookeper Service container
+type: container
+services:
+  - name: zookeper-service
+    ports:
+      - name: zookeperport
+        containerPort: 2181
+        # Maps service:80 -> container:8080
+        servicePort: 2181
+    healthCheck:
+      tcpPort: zookeperport
+    ingresses:
+      - path: /bitnami-zookeper
+        port: zookeperport
+    env:
+      ALLOW_ANONYMOUS_LOGIN: yes

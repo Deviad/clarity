@@ -1,0 +1,60 @@
+#env:
+#  - name: REDIS_REPLICATION_MODE
+#    value: master
+#  - name: REDIS_PASSWORD
+#    valueFrom:
+#      secretKeyRef:
+#        name: redis
+#        key: redis-password
+#  - name: REDIS_PORT
+#    value: "6379"
+
+#services:
+#  zookeeper:
+#    image: bitnami/zookeeper:latest
+#    environment:
+#      - ALLOW_ANONYMOUS_LOGIN=yes
+#    networks:
+#      - clarity
+#    ports:
+#      - 2181:2181
+#
+#  clarity-kafka:
+#    image: bitnami/kafka
+#    environment:
+#      - ALLOW_PLAINTEXT_LISTENER=yes
+#      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://clarity-kafka:9092
+#
+#    volumes:
+#      - kafka:/bitnami/kafka:cached
+#    ports:
+#      - "9092:9092"
+#    networks:
+#      - clarity
+#    restart: always
+#    depends_on:
+#      - zookeeper
+
+kind: Module
+name: kafka
+description: Kafka Service container
+type: container
+services:
+  - name: kafka-service
+    ports:
+      - name: kafkaport
+        containerPort: 9092
+        # Maps service:80 -> container:8080
+        servicePort: 9092
+    healthCheck:
+      tcpPort: kafkaport
+    ingresses:
+      - path: /bitnami-kafka
+        port: kafkaport
+    dependencies:
+      - zookeper-service
+    env:
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-service:9092

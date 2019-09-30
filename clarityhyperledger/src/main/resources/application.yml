@@ -1,6 +1,10 @@
 micronaut:
   application:
     name: clarity-hyperledger
+
+  server:
+    port: 8889
+
 #  security:
 #    enabled: true
 #    endpoints:
