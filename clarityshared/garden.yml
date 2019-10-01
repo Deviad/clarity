@@ -1,0 +1,4 @@
+kind: Module
+name: clarityshared
+description: Shared code
+type: container

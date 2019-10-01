@@ -1,2 +1,4 @@
 rootProject.name ='claritydispatcher'
-project(':clarityshared').projectDir = new File('../clarityshared')
+if (startParameter.projectProperties.get("profile") != "garden") {
+    project(':clarityshared').projectDir = new File('../clarityshared')
+}
