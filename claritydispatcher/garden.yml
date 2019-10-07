@@ -19,9 +19,9 @@ services:
     ingresses:
       - path: /dispatcher-health
         port: http
-    build:
-      dependencies:
-        - name: clarityshared
-          copy:
-            - source: "./target/libs"
-              target: libs/
+build:
+  dependencies:
+    - name: clarityshared
+      copy:
+        - source: "./target/libs"
+          target: libs/

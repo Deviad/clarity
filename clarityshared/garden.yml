@@ -1,4 +1,6 @@
 kind: Module
 name: clarityshared
 description: Shared code
-type: container
+type: exec
+build:
+  command: ["./gradlew clean build"]
